@@ -1,0 +1,22 @@
+:volu room BOX 1000 1000 1000 G4_AIR
+:volu air  BOX 500 500 500 G4_AIR
+// Brain geometry for prion disease radiation therapy
+:volu head ELLIPTICALTUBE 80 90 110 G4_WATER
+:volu brain ELLIPTICALTUBE 70 80 90 G4_BRAIN_ICRP
+:mixt PRION_PROTEIN 1.35 5
+  H 0.0700
+  C 0.5180
+  N 0.1700
+  O 0.2400
+  S 0.0020
+:volu prion_region ORB 15 PRION_PROTEIN
+:rotm r000 0 0 0
+:place prion_region 1 brain r000 0 0 0
+:place brain 2 head r000 0 0 0
+:place head 3 air r000 0 0 0
+:place air 4 room r000 0 0 0
+:color prion_region 0.8 0.1 0.1
+:color brain 0.9 0.8 0.8
+:color head 0.95 0.95 0.9
+:vis air OFF
+:vis room OFF

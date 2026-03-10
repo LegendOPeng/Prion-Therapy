@@ -1,0 +1,9 @@
+ray,runs,cv_pct,quality,voxels_mean,voxels_std,core_mev_mean,core_mev_std,surf_mev_mean,surf_mev_std,surf_core_mean,surf_core_std,depth_mm_mean,depth_mm_std,core_hit_pct,time_sec,stop_condition
+Gamma,60,9.9907,ACCEPTABLE,1722.1,69.5,67.6558,6.7593,233.9836,13.0395,3.4964,0.4376,13.1656,0.3272,100.0,70.47,early stop (converged)
+Neutron,61,5.0788,ACCEPTABLE,10048.1,264.6,316.1215,16.0553,1341.114,35.4699,4.254,0.2602,13.9984,0.2018,100.0,76.32,early stop (converged)
+Carbon Ion,35,3.178,GOOD,11325.7,482.9,129608.1053,4118.9172,414970.5239,2553.0528,3.205,0.1086,12.844,0.061,100.0,193.4,early stop (converged)
+Alpha,26,1.346,EXCELLENT,1251.4,16.4,7652.0912,103.001,3347.9088,103.001,0.4378,0.0193,24.4656,0.073,100.0,28.86,early stop (converged)
+
+Run these commands when wanted formated
+cd ~/Desktop/prion_radiation_research
+python3 scripts/step1_rays.py --plot-only

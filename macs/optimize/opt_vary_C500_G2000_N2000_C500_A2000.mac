@@ -1,0 +1,47 @@
+/control/verbose 0
+/geometry/source data/brain/brain.tg
+/score/create/boxMesh prionScorer
+/score/mesh/boxSize 5 5 5 cm
+/score/mesh/nBin 50 50 50
+/score/quantity/energyDeposit eDep
+/score/close
+/run/initialize
+
+# Gamma -- 2000 particles
+/gps/particle gamma
+/gps/energy 1.17 MeV
+/gps/pos/type Volume
+/gps/pos/shape Sphere
+/gps/pos/radius 15 mm
+/gps/pos/centre 0 0 0 mm
+/run/beamOn 2000
+
+# Neutron -- 2000 particles
+/gps/particle neutron
+/gps/energy 2.0 MeV
+/gps/pos/type Volume
+/gps/pos/shape Sphere
+/gps/pos/radius 15 mm
+/gps/pos/centre 0 0 0 mm
+/run/beamOn 2000
+
+# Carbon Ion -- 500 particles
+/gps/particle ion
+/gps/ion 6 12
+/gps/energy 3960 MeV
+/gps/pos/type Volume
+/gps/pos/shape Sphere
+/gps/pos/radius 15 mm
+/gps/pos/centre 0 0 0 mm
+/run/beamOn 500
+
+# Alpha -- 2000 particles
+/gps/particle alpha
+/gps/energy 5.5 MeV
+/gps/pos/type Volume
+/gps/pos/shape Sphere
+/gps/pos/radius 15 mm
+/gps/pos/centre 0 0 0 mm
+/run/beamOn 2000
+
+/score/dumpQuantityToFile prionScorer eDep opt_vary_C500_G2000_N2000_C500_A2000.csv

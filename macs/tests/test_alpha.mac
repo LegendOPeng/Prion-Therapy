@@ -1,0 +1,44 @@
+# ── BATCH MODE (default) ─────────────────────────────────────
+# To switch to VISUAL mode: remove the # from every /vis/ line
+# and add # in front of /score/dumpQuantityToFile
+# ─────────────────────────────────────────────────────────────
+/control/verbose 1
+/geometry/source data/brain/brain.tg
+
+# VISUAL MODE lines (uncomment to enable):
+#/vis/open TSG_QT_GLES 800x800-0+0
+#/vis/drawVolume
+#/vis/scene/create
+#/vis/scene/add/volume
+#/vis/scene/add/axes 0 0 0 10 cm
+#/vis/geometry/set/colour prion_region 0 0.9 0.1 0.1 0.8
+#/vis/geometry/set/colour brain        0 0.9 0.7 0.7 0.3
+#/vis/geometry/set/colour head         0 0.95 0.95 0.9 0.15
+#/vis/geometry/set/visibility air  0 false
+#/vis/geometry/set/visibility room 0 false
+#/vis/scene/add/trajectories smooth
+#/vis/modeling/trajectories/create/drawByParticleID
+#/vis/modeling/trajectories/drawByParticleID-0/set alpha red
+#/vis/modeling/trajectories/drawByParticleID-0/set e-    magenta
+#/vis/scene/add/hits
+#/vis/scene/endOfEventAction accumulate
+#/vis/viewer/set/viewpointThetaPhi 70 20
+#/vis/viewer/zoom 1.5
+
+/score/create/boxMesh prionScorer
+/score/mesh/boxSize 5 5 5 cm
+/score/mesh/nBin 50 50 50
+/score/quantity/energyDeposit eDep
+/score/close
+/run/initialize
+
+/gps/particle alpha
+/gps/energy 5.5 MeV
+/gps/pos/type Volume
+/gps/pos/shape Sphere
+/gps/pos/radius 15 mm
+/gps/pos/centre 0 0 0 mm
+/run/beamOn 2000
+
+/score/dumpQuantityToFile prionScorer eDep alpha_edep.csv
+#/vis/viewer/flush

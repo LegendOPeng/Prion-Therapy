@@ -1,0 +1,47 @@
+/control/verbose 0
+/geometry/source data/brain/brain.tg
+/score/create/boxMesh prionScorer
+/score/mesh/boxSize 5 5 5 cm
+/score/mesh/nBin 50 50 50
+/score/quantity/energyDeposit eDep
+/score/close
+/run/initialize
+
+# Gamma -- Low LET, full penetration, saturates SSB repair pathways
+/gps/particle gamma
+/gps/energy 1.17 MeV
+/gps/pos/type Volume
+/gps/pos/shape Sphere
+/gps/pos/radius 15 mm
+/gps/pos/centre 0 0 0 mm
+/run/beamOn 2000
+
+# Neutron -- Medium-high LET, generates high-LET recoil protons, wide scatter
+/gps/particle neutron
+/gps/energy 2.0 MeV
+/gps/pos/type Volume
+/gps/pos/shape Sphere
+/gps/pos/radius 15 mm
+/gps/pos/centre 0 0 0 mm
+/run/beamOn 2000
+
+# Carbon Ion -- Very high LET at Bragg peak, nuclear fragmentation, surface opening
+/gps/particle ion
+/gps/ion 6 12
+/gps/energy 3960 MeV
+/gps/pos/type Volume
+/gps/pos/shape Sphere
+/gps/pos/radius 15 mm
+/gps/pos/centre 0 0 0 mm
+/run/beamOn 500
+
+# Alpha -- Highest LET, irreparable complex DSBs, most lethal in pre-damaged tissue
+/gps/particle alpha
+/gps/energy 5.5 MeV
+/gps/pos/type Volume
+/gps/pos/shape Sphere
+/gps/pos/radius 15 mm
+/gps/pos/centre 0 0 0 mm
+/run/beamOn 2000
+
+/score/dumpQuantityToFile prionScorer eDep seq_GNCA_01_GNCA.csv
