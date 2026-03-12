@@ -237,5 +237,410 @@
       "stable_confirm": 3
     },
     "total_time_sec": 369.05
+  },
+  "step2": {
+    "Gamma": {
+      "optimal_count": 100,
+      "metrics": {
+        "voxels": 125000,
+        "core_mev": 6.686716863451218,
+        "total_mev": 19.604257143894557,
+        "ratio": 1.931821033286013,
+        "mean_depth": 35.81308411214953,
+        "efficiency": 0.06686716863451218,
+        "score": 0.03443528908601704,
+        "n_particles": 100
+      }
+    },
+    "Neutron": {
+      "optimal_count": 500,
+      "metrics": {
+        "voxels": 125000,
+        "core_mev": 75.90239173680406,
+        "total_mev": 479.74590285201305,
+        "ratio": 5.320563711820304,
+        "mean_depth": 30.638160548608308,
+        "efficiency": 0.15180478347360812,
+        "score": 0.02847818573802754,
+        "n_particles": 500
+      }
+    },
+    "Carbon Ion": {
+      "optimal_count": 100,
+      "metrics": {
+        "voxels": 125000,
+        "core_mev": 12586.406117003053,
+        "total_mev": 69274.80688771345,
+        "ratio": 4.503938633771692,
+        "mean_depth": 24.787239033544452,
+        "efficiency": 125.86406117003052,
+        "score": 27.883423187980483,
+        "n_particles": 100
+      }
+    },
+    "Alpha": {
+      "optimal_count": 300,
+      "metrics": {
+        "voxels": 125000,
+        "core_mev": 994.2362783500806,
+        "total_mev": 1650.0,
+        "ratio": 0.6595652722893485,
+        "mean_depth": 49.04693140794224,
+        "efficiency": 3.314120927833602,
+        "score": 4.949660720159669,
+        "n_particles": 300
+      }
+    }
+  },
+  "step3": {
+    "Gamma": {
+      "optimal_count": 100,
+      "n_runs": 80,
+      "mean_core": 3.2458402952990264,
+      "std_core": 1.3664103492374555,
+      "mean_ratio": 6.2469360582182665,
+      "std_ratio": 4.940340700050884,
+      "mean_depth": 28.852131560570882,
+      "std_depth": 3.376059540651422,
+      "mean_vox": 125000.0,
+      "final_cv": 42.09727604948516
+    },
+    "Neutron": {
+      "optimal_count": 500,
+      "n_runs": 66,
+      "mean_core": 67.2129468031245,
+      "std_core": 8.836490253679054,
+      "mean_ratio": 6.632080974529193,
+      "std_ratio": 0.9877554605302797,
+      "mean_depth": 30.61642240802189,
+      "std_depth": 1.0442671696412422,
+      "mean_vox": 125000.0,
+      "final_cv": 13.14700615576682
+    },
+    "Carbon Ion": {
+      "optimal_count": 100,
+      "n_runs": 44,
+      "mean_core": 11105.202959208198,
+      "std_core": 1210.6171943105205,
+      "mean_ratio": 5.079093948718993,
+      "std_ratio": 0.5768478183723995,
+      "mean_depth": 24.39423417545878,
+      "std_depth": 0.5638233255924987,
+      "mean_vox": 125000.0,
+      "final_cv": 10.901351364377385
+    },
+    "Alpha": {
+      "optimal_count": 300,
+      "n_runs": 29,
+      "mean_core": 913.5423900135582,
+      "std_core": 48.75054544138598,
+      "mean_ratio": 0.8111034449892148,
+      "std_ratio": 0.09617327024472719,
+      "mean_depth": 48.9343927809597,
+      "std_depth": 0.4085162767513788,
+      "mean_vox": 125000.0,
+      "final_cv": 5.336429483109422
+    }
+  },
+  "step4": {
+    "combinations": [
+      {
+        "combo": "Gamma + Carbon Ion + Alpha",
+        "n_rays": 3,
+        "rays": [
+          "Gamma",
+          "Carbon Ion",
+          "Alpha"
+        ],
+        "score": 2620.649585047611,
+        "core_mev": 12191.28726837107,
+        "total_mev": 68783.36092328577,
+        "ratio": 4.642009691768686,
+        "voxels": 4400,
+        "mean_depth": 25.167727272727273
+      },
+      {
+        "combo": "Gamma + Neutron + Carbon Ion + Alpha",
+        "n_rays": 4,
+        "rays": [
+          "Gamma",
+          "Neutron",
+          "Carbon Ion",
+          "Alpha"
+        ],
+        "score": 2270.2063328897507,
+        "core_mev": 11220.913092095338,
+        "total_mev": 66570.13440308794,
+        "ratio": 4.9326842527622645,
+        "voxels": 7133,
+        "mean_depth": 27.006589092948268
+      },
+      {
+        "combo": "Neutron + Carbon Ion + Alpha",
+        "n_rays": 3,
+        "rays": [
+          "Neutron",
+          "Carbon Ion",
+          "Alpha"
+        ],
+        "score": 2269.5809379701736,
+        "core_mev": 11398.397426607364,
+        "total_mev": 68529.98761154618,
+        "ratio": 5.0122476034724075,
+        "voxels": 6161,
+        "mean_depth": 27.606232754422983
+      },
+      {
+        "combo": "Neutron + Carbon Ion",
+        "n_rays": 2,
+        "rays": [
+          "Neutron",
+          "Carbon Ion"
+        ],
+        "score": 2247.32419420918,
+        "core_mev": 11164.395561725574,
+        "total_mev": 66515.9235774042,
+        "ratio": 4.95786159758061,
+        "voxels": 6483,
+        "mean_depth": 25.756594169366036
+      },
+      {
+        "combo": "Carbon Ion + Alpha",
+        "n_rays": 2,
+        "rays": [
+          "Carbon Ion",
+          "Alpha"
+        ],
+        "score": 2029.3408915343568,
+        "core_mev": 10855.542672258596,
+        "total_mev": 68816.48517997519,
+        "ratio": 5.339294796918456,
+        "voxels": 4109,
+        "mean_depth": 25.2572402044293
+      },
+      {
+        "combo": "Gamma + Carbon Ion",
+        "n_rays": 2,
+        "rays": [
+          "Gamma",
+          "Carbon Ion"
+        ],
+        "score": 2011.4045135152182,
+        "core_mev": 10669.982970743851,
+        "total_mev": 67164.7950850447,
+        "ratio": 5.294742481708229,
+        "voxels": 4089,
+        "mean_depth": 24.179016874541453
+      },
+      {
+        "combo": "Gamma + Neutron + Carbon Ion",
+        "n_rays": 3,
+        "rays": [
+          "Gamma",
+          "Neutron",
+          "Carbon Ion"
+        ],
+        "score": 1613.5934052967941,
+        "core_mev": 9569.322840142877,
+        "total_mev": 66223.94807380592,
+        "ratio": 5.920442457641773,
+        "voxels": 6189,
+        "mean_depth": 26.39069316529326
+      },
+      {
+        "combo": "Neutron + Alpha",
+        "n_rays": 2,
+        "rays": [
+          "Neutron",
+          "Alpha"
+        ],
+        "score": 1096.2354550987948,
+        "core_mev": 1084.7563244760204,
+        "total_mev": 2147.306157764726,
+        "ratio": 0.9795285902591612,
+        "voxels": 2968,
+        "mean_depth": 33.814690026954175
+      },
+      {
+        "combo": "Gamma + Alpha",
+        "n_rays": 2,
+        "rays": [
+          "Gamma",
+          "Alpha"
+        ],
+        "score": 1011.3221715587811,
+        "core_mev": 892.0961766683104,
+        "total_mev": 1670.1010935260147,
+        "ratio": 0.8721087896187383,
+        "voxels": 378,
+        "mean_depth": 41.70899470899471
+      },
+      {
+        "combo": "Gamma + Neutron + Alpha",
+        "n_rays": 3,
+        "rays": [
+          "Gamma",
+          "Neutron",
+          "Alpha"
+        ],
+        "score": 936.7083405359502,
+        "core_mev": 1022.6320301398897,
+        "total_mev": 2128.8431576674247,
+        "ratio": 1.0817293952510096,
+        "voxels": 2861,
+        "mean_depth": 29.90073400908773
+      }
+    ]
+  },
+  "step5": {
+    "firing_orders": [
+      {
+        "order": "Gamma \u2192 Alpha \u2192 Carbon Ion",
+        "perm": [
+          "Gamma",
+          "Alpha",
+          "Carbon Ion"
+        ],
+        "mean_score": 2930.8029888159713,
+        "std_score": 485.54413514016284,
+        "mean_core": 12758.612232594693,
+        "mean_ratio": 4.3921670899131176,
+        "mean_depth": 25.299925814628388
+      },
+      {
+        "order": "Carbon Ion \u2192 Alpha \u2192 Gamma",
+        "perm": [
+          "Carbon Ion",
+          "Alpha",
+          "Gamma"
+        ],
+        "mean_score": 2781.0834811310874,
+        "std_score": 590.127212006097,
+        "mean_core": 12510.125390569518,
+        "mean_ratio": 4.568210817617379,
+        "mean_depth": 25.61541392850122
+      },
+      {
+        "order": "Gamma \u2192 Carbon Ion \u2192 Alpha",
+        "perm": [
+          "Gamma",
+          "Carbon Ion",
+          "Alpha"
+        ],
+        "mean_score": 2603.2475172076724,
+        "std_score": 276.4777187851165,
+        "mean_core": 12063.343374934626,
+        "mean_ratio": 4.648556700568085,
+        "mean_depth": 25.577761440026926
+      },
+      {
+        "order": "Alpha \u2192 Carbon Ion \u2192 Gamma",
+        "perm": [
+          "Alpha",
+          "Carbon Ion",
+          "Gamma"
+        ],
+        "mean_score": 2474.529098603787,
+        "std_score": 571.7365788361215,
+        "mean_core": 11697.311656679432,
+        "mean_ratio": 4.81921758640812,
+        "mean_depth": 25.643126332178063
+      },
+      {
+        "order": "Carbon Ion \u2192 Gamma \u2192 Alpha",
+        "perm": [
+          "Carbon Ion",
+          "Gamma",
+          "Alpha"
+        ],
+        "mean_score": 2460.8784801255997,
+        "std_score": 531.8232904273527,
+        "mean_core": 11774.916419728765,
+        "mean_ratio": 4.863275469819337,
+        "mean_depth": 25.340720011930436
+      },
+      {
+        "order": "Alpha \u2192 Gamma \u2192 Carbon Ion",
+        "perm": [
+          "Alpha",
+          "Gamma",
+          "Carbon Ion"
+        ],
+        "mean_score": 2459.8260809372305,
+        "std_score": 373.0452241219132,
+        "mean_core": 11799.40492979004,
+        "mean_ratio": 4.835274399888148,
+        "mean_depth": 25.119739785317385
+      }
+    ]
+  },
+  "step6": {
+    "best_order": [
+      "Gamma",
+      "Alpha",
+      "Carbon Ion"
+    ],
+    "opt_counts": {
+      "Gamma": 100,
+      "Carbon Ion": 100,
+      "Alpha": 300
+    },
+    "n_reps": 10,
+    "final_stats": {
+      "core_mev": {
+        "mean": 12059.058838221415,
+        "std": 1159.6474583710449
+      },
+      "total_mev": {
+        "mean": 68778.20303003839,
+        "std": 1416.947326430115
+      },
+      "ratio": {
+        "mean": 4.740630609970803,
+        "std": 0.43716674396552446
+      },
+      "voxels": {
+        "mean": 4141.1,
+        "std": 251.1929094894555
+      },
+      "mean_depth": {
+        "mean": 25.316917985817543,
+        "std": 0.7208493511880322
+      },
+      "score": {
+        "mean": 2579.549719855281,
+        "std": 504.95943924029274
+      }
+    }
+  },
+  "step1_fixed": {
+    "Gamma": {
+      "final_cv_pct": 9.990715523084143,
+      "mean_core_mev": 67.65583912104508,
+      "mean_ratio": 3.4964157084413947,
+      "mean_depth_mm": 13.16564424162512,
+      "cv_quality": "ACCEPTABLE"
+    },
+    "Neutron": {
+      "final_cv_pct": 5.078838953642277,
+      "mean_core_mev": 316.1214722807883,
+      "mean_ratio": 4.25403511627919,
+      "mean_depth_mm": 13.998424932222598,
+      "cv_quality": "ACCEPTABLE"
+    },
+    "Carbon Ion": {
+      "final_cv_pct": 3.177978126650754,
+      "mean_core_mev": 129608.10528395104,
+      "mean_ratio": 3.205024496759197,
+      "mean_depth_mm": 12.843986707280559,
+      "cv_quality": "GOOD"
+    },
+    "Alpha": {
+      "final_cv_pct": 1.3460497765612955,
+      "mean_core_mev": 7652.091158778481,
+      "mean_ratio": 0.43776549072702253,
+      "mean_depth_mm": 24.46559929644011,
+      "cv_quality": "EXCELLENT"
+    }
   }
 }

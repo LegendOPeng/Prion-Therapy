@@ -1,0 +1,7 @@
+Order,Mean_Score,Std_Score,Mean_Core_MeV,Mean_Ratio,Mean_Depth_mm
+Gamma → Alpha → Carbon Ion,2930.8030,485.5441,12758.6122,4.3922,25.30
+Carbon Ion → Alpha → Gamma,2781.0835,590.1272,12510.1254,4.5682,25.62
+Gamma → Carbon Ion → Alpha,2603.2475,276.4777,12063.3434,4.6486,25.58
+Alpha → Carbon Ion → Gamma,2474.5291,571.7366,11697.3117,4.8192,25.64
+Carbon Ion → Gamma → Alpha,2460.8785,531.8233,11774.9164,4.8633,25.34
+Alpha → Gamma → Carbon Ion,2459.8261,373.0452,11799.4049,4.8353,25.12

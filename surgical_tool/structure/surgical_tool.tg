@@ -1,0 +1,11 @@
+:solid SteelRod
+:volu SteelRod BOX 5 5 50
+:color SteelRod grey
+:material SteelRod G4_STAINLESS-STEEL
+:place SteelRod 1 World 0 0 0
+
+:solid PrionLayer
+:volu PrionLayer BOX 4.9 4.9 0.5
+:color PrionLayer red
+:material PrionLayer G4_WATER
+:place PrionLayer 1 SteelRod 0 0 49.5

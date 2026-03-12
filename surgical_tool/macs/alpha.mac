@@ -1,0 +1,23 @@
+/geometry/source /Users/penguin/Desktop/prion_radiation_research/surgical_tool/structure/surgical_tool.tg
+
+/geometry/source /Users/penguin/Desktop/prion_radiation_research/surgical_tool/structure/surgical_tool.tg
+
+/geometry/source /Users/penguin/Desktop/prion_radiation_research/surgical_tool/structure/surgical_tool.tg
+
+/score/create cubicMesh prionMesh
+/score/mesh/boxSize 5 5 1 mm
+/score/mesh/nBin 10 10 5
+/score/quantity/energyDeposit eDep
+/score/close
+
+/gps/particle alpha
+/gps/pos/type Plane
+/gps/pos/shape Rectangle
+/gps/pos/centre 0 0 -60 mm
+/gps/pos/halfx 4 mm
+/gps/pos/halfy 4 mm
+/gps/direction 0 0 1
+/gps/ene/mono 5.5 MeV
+/run/beamOn 1000
+
+/score/dumpQuantityToFile prionMesh eDep alpha_edep.csv

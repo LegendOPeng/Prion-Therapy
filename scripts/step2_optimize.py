@@ -1,282 +1,276 @@
 import csv, os, math, subprocess, time, json, random, re
+import numpy as np
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 
 LOG_FILE   = "simulation_progress_log.json"
-STABLE_WIN = 8
-STABLE_THR = 1.0
+OUT_DIR    = "Steps/Step2_Opt"
+STATS_DIR  = "data/stats"
 GRID=50; CENTER=GRID//2; CMIN=CENTER-5; CMAX=CENTER+5
-
-COARSE_COUNTS = [100, 300, 500, 1000, 2000, 5000, 10000]
-
-DOSE_LIMITS_GY = {
-    "Gamma":24.0,"Neutron":14.0,"Carbon Ion":20.0,"Alpha":20.0
-}
-MEV_TO_JOULE=1.60218e-13
-CORE_MASS_KG=1.0e-6*1350
+COUNTS     = [100, 300, 500, 1000, 2000, 5000, 10000]
 
 RAYS = {
-    "Gamma":      {"mac":"macs/tests/test_gamma.mac",   "csv":"gamma_edep.csv",   "min":10,"max":40},
-    "Neutron":    {"mac":"macs/tests/test_neutron.mac",  "csv":"neutron_edep.csv", "min":15,"max":60},
-    "Carbon Ion": {"mac":"macs/tests/test_carbon.mac",   "csv":"carbon_edep.csv",  "min":10,"max":30},
-    "Alpha":      {"mac":"macs/tests/test_alpha.mac",    "csv":"alpha_edep.csv",   "min":8, "max":25},
+    "Gamma":      {"mac":"macs/tests/test_gamma.mac",   "csv":"gamma_edep.csv",   "color":"#e74c3c"},
+    "Neutron":    {"mac":"macs/tests/test_neutron.mac",  "csv":"neutron_edep.csv", "color":"#3498db"},
+    "Carbon Ion": {"mac":"macs/tests/test_carbon.mac",   "csv":"carbon_edep.csv",  "color":"#2ecc71"},
+    "Alpha":      {"mac":"macs/tests/test_alpha.mac",    "csv":"alpha_edep.csv",   "color":"#f39c12"},
 }
 
-def load_csv(fp):
-    data={}
-    if not os.path.exists(fp): return data
-    with open(fp) as f:
-        for row in csv.reader(f):
-            if len(row)<4: continue
-            try:
-                ix,iy,iz=int(row[0]),int(row[1]),int(row[2]); e=float(row[3])
-                if e>0: data[(ix,iy,iz)]=data.get((ix,iy,iz),0)+e
-            except ValueError: continue
-    return data
+DOSE_LIMITS = {"Gamma":60.0,"Neutron":45.0,"Carbon Ion":55.0,"Alpha":50.0}
 
-def classify(ix,iy,iz):
-    if CMIN<=ix<=CMAX and CMIN<=iy<=CMAX and CMIN<=iz<=CMAX: return "core"
-    if ix<5 or ix>44 or iy<5 or iy>44 or iz<5 or iz>44: return "edge"
-    return "surface"
-
-def analyse(data):
-    if not data: return None
-    total=sum(data.values())
-    core_e=sum(e for (ix,iy,iz),e in data.items() if classify(ix,iy,iz)=="core")
-    surf_e=sum(e for (ix,iy,iz),e in data.items() if classify(ix,iy,iz)=="surface")
-    mean_z=sum(iz*e for (ix,iy,iz),e in data.items())/total if total>0 else 0
-    return {"voxels":len(data),"total_MeV":total,"core_MeV":core_e,"surf_MeV":surf_e,
-            "surf_core":surf_e/core_e if core_e>0 else float("inf"),"mean_depth":mean_z}
-
-def mean_std(vals):
-    n=len(vals)
-    if n==0: return 0.0,0.0
-    m=sum(vals)/n; s=math.sqrt(sum((v-m)**2 for v in vals)/(n-1)) if n>1 else 0.0
-    return m,s
-
-def cv_pct(vals):
-    m,s=mean_std(vals); return s/m*100 if m>0 else 0.0
-
-def fmt_time(sec):
-    sec=int(sec)
-    if sec<60: return f"{sec}s"
-    if sec<3600: return f"{sec//60}m {sec%60}s"
-    return f"{sec//3600}h {(sec%3600)//60}m {sec%60}s"
-
-def get_beamon(mac_path):
-    with open(mac_path) as f:
+def load_csv(path):
+    rows = []
+    if not os.path.exists(path):
+        return rows
+    with open(path) as f:
         for line in f:
-            m=re.match(r'\s*/run/beamOn\s+(\d+)',line)
-            if m: return int(m.group(1))
-    return None
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            parts = line.split(",")
+            if len(parts) < 4:
+                continue
+            try:
+                rows.append((int(parts[0]),int(parts[1]),int(parts[2]),float(parts[3])))
+            except ValueError:
+                continue
+    return rows
 
-def set_beamon_content(mac_path,count):
-    with open(mac_path) as f: content=f.read()
-    new=re.sub(r'(/run/beamOn\s+)\d+',rf'\g<1>{count}',content)
-    if '/run/beamOn' not in new: new+=f'\n/run/beamOn {count}\n'
-    return new
+def compute_metrics(rows, n_particles):
+    if not rows:
+        return None
+    voxels_hit = len(rows)
+    core_mev = sum(e for x,y,z,e in rows if CMIN<=x<CMAX and CMIN<=y<CMAX and CMIN<=z<CMAX)
+    total_mev = sum(e for _,_,_,e in rows)
+    surf_mev  = total_mev - core_mev
+    ratio     = surf_mev/core_mev if core_mev>0 else 999
+    depths    = [z for _,_,z,e in rows if e>0]
+    mean_depth= sum(depths)/len(depths)*2 if depths else 0
+    eff       = core_mev/n_particles if n_particles>0 else 0
+    score     = eff/(ratio+0.01)
+    return {"voxels":voxels_hit,"core_mev":core_mev,"total_mev":total_mev,
+            "ratio":ratio,"mean_depth":mean_depth,"efficiency":eff,"score":score,
+            "n_particles":n_particles}
 
-def run_sim(mac_content,csv_path,ray_name):
-    s1=random.randint(1,999999999); s2=random.randint(1,999999999)
-    tmp=f"_tmp2_{ray_name.replace(' ','_')}.mac"
-    with open(tmp,"w") as f: f.write(f"/random/setSeeds {s1} {s2}\n"); f.write(mac_content)
-    subprocess.run(["gears",tmp],capture_output=True)
+def run_sim(mac_path, csv_path, ray_name, n_particles):
+    seed1 = random.randint(1,999999999)
+    seed2 = random.randint(1,999999999)
+    tmp   = f"_tmp_step2_{ray_name.replace(' ','_')}.mac"
+    if os.path.exists(csv_path):
+        os.remove(csv_path)
+    with open(mac_path) as f:
+        content = f.read()
+    content = re.sub(r'/run/beamOn\s+\d+', f'/run/beamOn {n_particles}', content)
+    with open(tmp,"w") as f:
+        f.write(f"/random/setSeeds {seed1} {seed2}\n")
+        f.write(content)
+    subprocess.run(["gears", tmp], capture_output=True)
     os.remove(tmp)
     return load_csv(csv_path)
 
-def run_adaptive(mac_path,csv_path,ray_name,count,min_r,max_r):
-    mc=set_beamon_content(mac_path,count)
-    runs=[]; cvh=[]; sc=0
-    for _ in range(max_r):
-        r=analyse(run_sim(mc,csv_path,ray_name))
-        if r: runs.append(r)
-        if len(runs)>=min_r:
-            cvh.append(cv_pct([x["core_MeV"] for x in runs]))
-            if len(cvh)>=STABLE_WIN:
-                if max(cvh[-STABLE_WIN:])-min(cvh[-STABLE_WIN:])<STABLE_THR:
-                    sc+=1
-                    if sc>=3: break
-                else: sc=0
-    if not runs: return None,0
-    st={}
-    for k in ["voxels","total_MeV","core_MeV","surf_MeV","surf_core","mean_depth"]:
-        m,s=mean_std([x[k] for x in runs]); st[k]={"mean":m,"std":s}
-    n=len(runs)
-    st["n_runs"]=n; st["final_cv_pct"]=cv_pct([x["core_MeV"] for x in runs])
-    st["count"]=count; st["efficiency"]=st["core_MeV"]["mean"]/count*1000
-    return st,n
+def interpolate_peak(counts, scores):
+    if len(counts) < 3:
+        return counts[scores.index(max(scores))]
+    best_i = scores.index(max(scores))
+    lo = max(0, best_i-1)
+    hi = min(len(counts)-1, best_i+1)
+    xs = counts[lo:hi+1]
+    ys = scores[lo:hi+1]
+    try:
+        coeffs = np.polyfit(np.log(xs), ys, 2)
+        if coeffs[0] < 0:
+            peak_log = -coeffs[1]/(2*coeffs[0])
+            peak_n   = int(round(math.exp(peak_log)))
+            peak_n   = max(counts[0], min(counts[-1]*2, peak_n))
+            return peak_n
+    except Exception:
+        pass
+    return counts[best_i]
 
-def fit_quad(xs,ys):
-    n=len(xs)
-    if n<3: return None
-    s1=sum(xs); s2=sum(x**2 for x in xs); s3=sum(x**3 for x in xs); s4=sum(x**4 for x in xs)
-    t0=sum(ys); t1=sum(x*y for x,y in zip(xs,ys)); t2=sum(x**2*y for x,y in zip(xs,ys))
-    A=[[s4,s3,s2],[s3,s2,s1],[s2,s1,float(n)]]
-    b=[t2,t1,t0]
-    for col in range(3):
-        piv=col+max(range(3-col),key=lambda r:abs(A[col+r][col]))
-        A[col],A[piv]=A[piv],A[col]; b[col],b[piv]=b[piv],b[col]
-        if abs(A[col][col])<1e-20: return None
-        for row in range(col+1,3):
-            f=A[row][col]/A[col][col]
-            for k in range(col,3): A[row][k]-=f*A[col][k]
-            b[row]-=f*b[col]
-    x=[0.0]*3
-    for i in range(2,-1,-1):
-        x[i]=b[i]
-        for j in range(i+1,3): x[i]-=A[i][j]*x[j]
-        x[i]/=A[i][i]
-    return x[0],x[1],x[2]
+def run_step2():
+    os.makedirs(OUT_DIR, exist_ok=True)
+    os.makedirs(STATS_DIR, exist_ok=True)
+    SEP = "="*90
+    print(f"\n{SEP}")
+    print("  STEP 2 — Per-Ray Particle Count Optimization")
+    print("  Finds the optimal beamOn count per ray via interpolation search.")
+    print(SEP)
 
-def interp_peak(counts,effs):
-    r=fit_quad([float(c) for c in counts],effs)
-    if not r: return None
-    a,b,c=r
-    if a>=0: return None
-    peak=-b/(2*a)
-    if peak<min(counts) or peak>max(counts): return None
-    return max(1,int(round(peak)))
+    results = {}
 
-def dose_gy(core_mev):
-    return core_mev*MEV_TO_JOULE/CORE_MASS_KG
+    for ray, cfg in RAYS.items():
+        print(f"\n  {'─'*60}")
+        print(f"  Ray: {ray}")
+        print(f"  {'─'*60}")
+        counts_tested = []
+        metrics_list  = []
 
-def write_beamon(mac_path,count):
-    with open(mac_path) as f: content=f.read()
-    new=re.sub(r'(/run/beamOn\s+)\d+',rf'\g<1>{count}',content)
-    if '/run/beamOn' not in new: new+=f'\n/run/beamOn {count}\n'
-    with open(mac_path,"w") as f: f.write(new)
-
-def main():
-    t0=time.time(); sep="="*95
-    print(f"\n{sep}")
-    print("  STEP 2 — Particle Count Optimization with Quadratic Interpolation")
-    print("  Phase 1: Coarse grid (7 preset counts, adaptive runs each)")
-    print("  Phase 2: Quadratic interpolation — find efficiency PEAK between points")
-    print("  Phase 3: Verify interpolated optimum with fresh adaptive runs")
-    print("  Phase 4: Safety check vs worst-case single-fraction brain dose limits")
-    print(sep)
-
-    print("\n  Pre-flight:")
-    ok=True
-    for ray,cfg in RAYS.items():
-        ex="OK" if os.path.exists(cfg["mac"]) else "MISSING"
-        if ex=="MISSING": ok=False
-        print(f"    {ray:<12} mac={ex}  beamOn={get_beamon(cfg['mac'])}")
-    if not os.path.exists("data/brain/brain.tg"): print("  ERROR: brain.tg missing"); return
-    if not os.path.exists(LOG_FILE): print("  ERROR: run Step 1 first"); return
-    if not ok: print("  ERROR: missing macs"); return
-    print(f"  Coarse counts: {COARSE_COUNTS}")
-
-    with open(LOG_FILE) as f: log=json.load(f)
-    if "step1" not in log: print("  ERROR: Step 1 missing from log"); return
-
-    log["step2"]={"results":{},"optimal":{},"timing":{},"interpolation":{}}
-    all_opt={}; grand=0
-
-    for ray,cfg in RAYS.items():
-        rs=time.time()
-        print(f"\n{sep}\n  [{ray}]  PHASE 1 — coarse grid\n{sep}")
-        cr={}
-
-        for count in COARSE_COUNTS:
-            ct=time.time()
-            print(f"    beamOn={count:>6} ...",end="",flush=True)
-            st,nr=run_adaptive(cfg["mac"],cfg["csv"],ray,count,cfg["min"],cfg["max"])
-            grand+=nr
-            if st is None: print("  FAILED"); continue
-            print(f"  n={nr:>3}  core={st['core_MeV']['mean']:>12,.2f} MeV  "
-                  f"eff={st['efficiency']:.5f}  CV={st['final_cv_pct']:.3f}%  ({fmt_time(time.time()-ct)})")
-            cr[count]=st
-
-        note=""; best=None
-        print(f"\n  PHASE 2 — Quadratic interpolation")
-        if len(cr)<3:
-            print(f"    Too few points — using grid best")
-            best=max(cr,key=lambda c:cr[c]["efficiency"]); note="too few for interpolation"
-        else:
-            xs=sorted(cr.keys()); ys=[cr[c]["efficiency"] for c in xs]
-            print(f"    Efficiency at coarse points:")
-            for c,e in zip(xs,ys): print(f"      {c:>6} particles → eff={e:.5f} MeV/1kP")
-            pk=interp_peak(xs,ys)
-            if pk is None:
-                print(f"    No interior maximum — efficiency monotone increasing.")
-                print(f"    More particles always helps in this range. Using highest count.")
-                best=xs[-1]; note="monotone — used highest tested count"
+        # Coarse sweep
+        for n in COUNTS:
+            print(f"    Testing n={n:>6} ... ", end="", flush=True)
+            rows = run_sim(cfg["mac"], cfg["csv"], ray, n)
+            m    = compute_metrics(rows, n)
+            if m:
+                counts_tested.append(n)
+                metrics_list.append(m)
+                print(f"core={m['core_mev']:>10.2f} MeV  ratio={m['ratio']:.4f}  eff={m['efficiency']:.6f}  score={m['score']:.6f}")
             else:
-                pkr=max(50,int(round(pk/50)*50))
-                print(f"    Raw interpolated peak: {pk:.1f}  →  rounded: {pkr} particles")
+                print("no data")
 
-                print(f"\n  PHASE 3 — Verify at {pkr} particles")
-                if pkr in cr:
-                    print(f"    Already in coarse grid — using cached result.")
-                    vs=cr[pkr]; nvr=vs["n_runs"]
-                else:
-                    ct=time.time()
-                    print(f"    Running beamOn={pkr} ...",end="",flush=True)
-                    vs,nvr=run_adaptive(cfg["mac"],cfg["csv"],ray,pkr,cfg["min"],cfg["max"])
-                    grand+=nvr
-                    if vs is None:
-                        print("  FAILED"); best=max(cr,key=lambda c:cr[c]["efficiency"]); note="verify failed"
-                    else:
-                        print(f"  n={nvr:>3}  core={vs['core_MeV']['mean']:>12,.2f} MeV  "
-                              f"eff={vs['efficiency']:.5f}  ({fmt_time(time.time()-ct)})")
-                    cr[pkr]=vs
+        if not metrics_list:
+            print(f"  [SKIP] No data for {ray}")
+            continue
 
-                if best is None:
-                    gb=max(cr,key=lambda c:cr[c]["efficiency"])
-                    if cr[pkr]["efficiency"]>=cr[gb]["efficiency"]:
-                        best=pkr; note=f"interpolated peak {pkr} BETTER than grid best {gb}"
-                    else:
-                        best=gb; note=f"interpolated peak {pkr} tested; grid best {gb} won"
-                    print(f"    → {note}")
+        # Interpolate peak
+        scores = [m["score"] for m in metrics_list]
+        peak_n = interpolate_peak(counts_tested, scores)
 
-        log["step2"]["interpolation"][ray]={"note":note,"best_count":best}
+        # Test predicted peak if not already tested
+        if peak_n not in counts_tested:
+            print(f"    Testing interpolated peak n={peak_n} ... ", end="", flush=True)
+            rows = run_sim(cfg["mac"], cfg["csv"], ray, peak_n)
+            m    = compute_metrics(rows, peak_n)
+            if m:
+                counts_tested.append(peak_n)
+                metrics_list.append(m)
+                scores.append(m["score"])
+                print(f"core={m['core_mev']:>10.2f} MeV  ratio={m['ratio']:.4f}  score={m['score']:.6f}")
 
-        print(f"\n  PHASE 4 — Safety check")
-        bst=cr[best]; cmev=bst["core_MeV"]["mean"]
-        dgy=dose_gy(cmev); lim=DOSE_LIMITS_GY[ray]; safe=dgy<=lim
-        print(f"    Optimal count:  {best} particles")
-        print(f"    Core MeV:       {cmev:,.4f} MeV")
-        print(f"    Approx dose:    {dgy:.4e} Gy")
-        print(f"    Brain limit:    {lim} Gy  ({ray})")
-        print(f"    Status:         {'SAFE' if safe else '*** EXCEEDS BRAIN LIMIT ***'}")
+        # Best
+        best_idx = scores.index(max(scores))
+        best_n   = counts_tested[best_idx]
+        best_m   = metrics_list[best_idx]
 
-        print(f"\n  {'Count':>8}  {'Core MeV':>16}  {'Eff MeV/1kP':>13}  {'Dose Gy':>13}  {'CV%':>8}  {'N':>4}")
-        print("  "+"-"*72)
-        for c in sorted(cr.keys()):
-            r=cr[c]; d=dose_gy(r["core_MeV"]["mean"])
-            fl=" <- OPTIMAL" if c==best else ("  UNSAFE" if d>lim else "")
-            print(f"  {c:>8}  {r['core_MeV']['mean']:>16,.4f}  {r['efficiency']:>13.5f}  "
-                  f"{d:>13.4e}  {r['final_cv_pct']:>8.4f}%  {r['n_runs']:>4}{fl}")
+        results[ray] = {
+            "optimal_count": best_n,
+            "metrics": best_m,
+            "all_counts": counts_tested,
+            "all_metrics": metrics_list,
+            "color": cfg["color"]
+        }
+        print(f"\n  ★ OPTIMAL for {ray}: n={best_n}  score={best_m['score']:.6f}")
 
-        rt=time.time()-rs
-        all_opt[ray]={"optimal_count":best,"stats":bst,"dose_gy":dgy,"safety_ok":safe}
-        log["step2"]["results"][ray]={str(c):s for c,s in cr.items()}
-        log["step2"]["optimal"][ray]={"optimal_count":best,"stats":bst,"dose_gy":dgy,"safety_ok":safe}
-        log["step2"]["timing"][ray]=round(rt,2)
-        print(f"\n  [{ray}] complete — {fmt_time(rt)}")
+    # Save results
+    log = json.load(open(LOG_FILE)) if os.path.exists(LOG_FILE) else {}
+    log["step2"] = {r: {"optimal_count": v["optimal_count"], "metrics": v["metrics"]}
+                    for r,v in results.items()}
+    with open(LOG_FILE,"w") as f:
+        json.dump(log, f, indent=2)
 
-    print(f"\n{sep}\n  UPDATING MAC FILES\n{sep}")
-    for ray,opt in all_opt.items():
-        mac=RAYS[ray]["mac"]; old=get_beamon(mac); new=opt["optimal_count"]
-        write_beamon(mac,new)
-        print(f"  {ray:<12}  {old} → {new}  dose≈{opt['dose_gy']:.3e} Gy  "
-              f"{'SAFE' if opt['safety_ok'] else 'UNSAFE'}")
+    # CSV
+    csv_path = os.path.join(STATS_DIR, "step2_optimal_counts.csv")
+    with open(csv_path,"w",newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["Ray","Optimal_Count","Core_MeV","Surf_Core_Ratio","Efficiency","Score","Mean_Depth_mm"])
+        for ray, v in results.items():
+            m = v["metrics"]
+            w.writerow([ray, v["optimal_count"], f"{m['core_mev']:.4f}",
+                        f"{m['ratio']:.4f}", f"{m['efficiency']:.6f}",
+                        f"{m['score']:.6f}", f"{m['mean_depth']:.2f}"])
 
-    tt=time.time()-t0
-    log["step2"]["total_time_sec"]=round(tt,2); log["step2"]["total_runs"]=grand
-    with open(LOG_FILE,"w") as f: json.dump(log,f,indent=2)
+    print_report(results)
+    plot_results(results)
+    print(f"\n  Graphs saved to {OUT_DIR}/")
+    print(f"  CSV saved to {csv_path}")
+    print(f"  JSON log updated: {LOG_FILE}\n")
 
-    print(f"\n{sep}\n  STEP 2 SUMMARY\n{sep}")
-    print(f"  {'Ray':<12}  {'Count':>7}  {'Core MeV':>14}  {'Eff MeV/1kP':>13}  "
-          f"{'Dose Gy':>13}  {'Limit':>7}  {'OK':>4}")
-    print("  "+"-"*78)
-    for ray,opt in all_opt.items():
-        s=opt["stats"]; c=opt["optimal_count"]
-        print(f"  {ray:<12}  {c:>7}  {s['core_MeV']['mean']:>14,.4f}  "
-              f"{s['efficiency']:>13.5f}  {opt['dose_gy']:>13.4e}  "
-              f"{DOSE_LIMITS_GY[ray]:>7.1f}  {'YES' if opt['safety_ok'] else 'NO':>4}")
+def print_report(results):
+    SEP = "="*90
+    print(f"\n{SEP}")
+    print("  STEP 2 — Optimization Results")
+    print(SEP)
+    print(f"  {'Ray':<12} {'Optimal N':>10} {'Core MeV':>12} {'Surf/Core':>10} {'Eff MeV/p':>12} {'Score':>12} {'Depth mm':>10}")
+    print(f"  {'-'*82}")
+    for ray, v in results.items():
+        m = v["metrics"]
+        print(f"  {ray:<12} {v['optimal_count']:>10} {m['core_mev']:>12.2f} {m['ratio']:>10.4f} "
+              f"{m['efficiency']:>12.6f} {m['score']:>12.6f} {m['mean_depth']:>10.2f}mm")
+    print(SEP)
+    print("\n  Interpretation:")
+    for ray, v in results.items():
+        m = v["metrics"]
+        n = v["optimal_count"]
+        print(f"  {ray:<12} — optimal at {n} particles. "
+              f"Core energy {m['core_mev']:.2f} MeV, Surf/Core {m['ratio']:.4f}, "
+              f"efficiency {m['efficiency']:.6f} MeV/particle.")
 
-    print(f"\n  Total time: {fmt_time(tt)}  ({grand} runs)")
-    print(f"  Saved: {LOG_FILE}")
-    print(f"\n{sep}\n  STEP 2 COMPLETE — NOW RUN:\n  python3 scripts/step3_rerun_optimal.py\n{sep}\n")
+def plot_results(results):
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10), facecolor="#0d0d0d")
+    fig.suptitle("Step 2 — Per-Ray Particle Count Optimization", color="white", fontsize=14, fontweight="bold")
 
-if __name__=="__main__": main()
+    plot_data = [
+        (axes[0,0], "score",      "Optimization Score",        "Score (efficiency/ratio)"),
+        (axes[0,1], "core_mev",   "Core Energy vs Count",      "Core MeV"),
+        (axes[1,0], "ratio",      "Surf/Core Ratio vs Count",  "Surf/Core Ratio (lower=better)"),
+        (axes[1,1], "efficiency", "Efficiency vs Count",       "MeV per particle"),
+    ]
+
+    for ax, key, title, ylabel in plot_data:
+        ax.set_facecolor("#111111")
+        ax.set_title(title, color="white", fontsize=10)
+        ax.set_xlabel("Particle Count (beamOn)", color="white", fontsize=8)
+        ax.set_ylabel(ylabel, color="white", fontsize=8)
+        ax.tick_params(colors="white", labelsize=7)
+        for spine in ax.spines.values():
+            spine.set_color("#444")
+
+        for ray, v in results.items():
+            counts = v["all_counts"]
+            vals   = [m[key] for m in v["all_metrics"]]
+            ax.plot(counts, vals, "o-", color=v["color"], label=ray, linewidth=1.5, markersize=4)
+            opt_idx = v["all_counts"].index(v["optimal_count"]) if v["optimal_count"] in v["all_counts"] else -1
+            if opt_idx >= 0:
+                ax.axvline(v["optimal_count"], color=v["color"], alpha=0.3, linestyle="--", linewidth=1)
+                ax.plot(counts[opt_idx], vals[opt_idx], "*", color=v["color"], markersize=12)
+
+        ax.set_xscale("log")
+        ax.legend(fontsize=7, facecolor="#222", labelcolor="white")
+
+    plt.tight_layout(rect=[0,0,1,0.95])
+    out = os.path.join(OUT_DIR, "step2_optimization.png")
+    plt.savefig(out, dpi=150, bbox_inches="tight", facecolor="#0d0d0d")
+    plt.close()
+    print(f"  Saved {out}")
+
+    # Summary bar chart
+    fig2, axes2 = plt.subplots(1, 3, figsize=(14, 5), facecolor="#0d0d0d")
+    fig2.suptitle("Step 2 — Optimal Count Summary per Ray", color="white", fontsize=13, fontweight="bold")
+    ray_names = list(results.keys())
+    colors    = [results[r]["color"] for r in ray_names]
+
+    for ax, key, title, ylabel in [
+        (axes2[0], "optimal_count", "Optimal Particle Count", "beamOn count"),
+        (axes2[1], "core_mev",      "Core MeV at Optimal",    "MeV"),
+        (axes2[2], "ratio",         "Surf/Core at Optimal",   "ratio"),
+    ]:
+        ax.set_facecolor("#111111")
+        vals = [results[r]["optimal_count"] if key=="optimal_count" else results[r]["metrics"][key]
+                for r in ray_names]
+        bars = ax.bar(ray_names, vals, color=colors, edgecolor="none")
+        ax.set_title(title, color="white", fontsize=10)
+        ax.set_ylabel(ylabel, color="white", fontsize=8)
+        ax.tick_params(colors="white", labelsize=8)
+        for spine in ax.spines.values():
+            spine.set_color("#444")
+        for bar, val in zip(bars, vals):
+            ax.text(bar.get_x()+bar.get_width()/2, bar.get_height()*1.01,
+                    f"{val:.0f}" if key=="optimal_count" else f"{val:.3f}",
+                    ha="center", va="bottom", color="white", fontsize=8)
+
+    plt.tight_layout(rect=[0,0,1,0.95])
+    out2 = os.path.join(OUT_DIR, "step2_summary.png")
+    plt.savefig(out2, dpi=150, bbox_inches="tight", facecolor="#0d0d0d")
+    plt.close()
+    print(f"  Saved {out2}")
+
+if __name__ == "__main__":
+    import sys
+    if "--plot-only" in sys.argv:
+        log = json.load(open(LOG_FILE)) if os.path.exists(LOG_FILE) else {}
+        if "step2" not in log:
+            print("No Step 2 data in log yet. Run without --plot-only first.")
+        else:
+            print("Plot-only mode not fully implemented yet — run full simulation.")
+    else:
+        run_step2()

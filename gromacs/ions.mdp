@@ -1,0 +1,4 @@
+integrator = steep
+nsteps = 0
+nstlist = 1
+coulombtype = cutoff

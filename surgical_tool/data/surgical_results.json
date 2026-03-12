@@ -1,0 +1,106 @@
+{
+  "gamma": {
+    "500": {
+      "total": 0,
+      "mean": 0,
+      "max": 0,
+      "nonzero": 0
+    },
+    "1000": {
+      "total": 0,
+      "mean": 0,
+      "max": 0,
+      "nonzero": 0
+    },
+    "2000": {
+      "total": 0,
+      "mean": 0,
+      "max": 0,
+      "nonzero": 0
+    },
+    "5000": {
+      "total": 0,
+      "mean": 0,
+      "max": 0,
+      "nonzero": 0
+    }
+  },
+  "alpha": {
+    "500": {
+      "total": 0,
+      "mean": 0,
+      "max": 0,
+      "nonzero": 0
+    },
+    "1000": {
+      "total": 0,
+      "mean": 0,
+      "max": 0,
+      "nonzero": 0
+    },
+    "2000": {
+      "total": 0,
+      "mean": 0,
+      "max": 0,
+      "nonzero": 0
+    },
+    "5000": {
+      "total": 0,
+      "mean": 0,
+      "max": 0,
+      "nonzero": 0
+    }
+  },
+  "neutron": {
+    "500": {
+      "total": 0,
+      "mean": 0,
+      "max": 0,
+      "nonzero": 0
+    },
+    "1000": {
+      "total": 0,
+      "mean": 0,
+      "max": 0,
+      "nonzero": 0
+    },
+    "2000": {
+      "total": 0,
+      "mean": 0,
+      "max": 0,
+      "nonzero": 0
+    },
+    "5000": {
+      "total": 0,
+      "mean": 0,
+      "max": 0,
+      "nonzero": 0
+    }
+  },
+  "carbon": {
+    "500": {
+      "total": 0,
+      "mean": 0,
+      "max": 0,
+      "nonzero": 0
+    },
+    "1000": {
+      "total": 0,
+      "mean": 0,
+      "max": 0,
+      "nonzero": 0
+    },
+    "2000": {
+      "total": 0,
+      "mean": 0,
+      "max": 0,
+      "nonzero": 0
+    },
+    "5000": {
+      "total": 0,
+      "mean": 0,
+      "max": 0,
+      "nonzero": 0
+    }
+  }
+}
