@@ -1,11 +1,14 @@
-/geometry/source /Users/penguin/Desktop/prion_radiation_research/surgical_tool/structure/surgical_tool.tg
+/geometry/source {BASE}/structure/surgical_tool.tg
 
-/geometry/source /Users/penguin/Desktop/prion_radiation_research/surgical_tool/structure/surgical_tool.tg
-
-/geometry/source /Users/penguin/Desktop/prion_radiation_research/surgical_tool/structure/surgical_tool.tg
+/score/create cubicMesh fullRodMesh
+/score/mesh/boxSize 5 5 50 mm
+/score/mesh/nBin 10 10 100
+/score/quantity/energyDeposit eDep
+/score/close
 
 /score/create cubicMesh prionMesh
-/score/mesh/boxSize 5 5 1 mm
+/score/mesh/boxSize 4.9 4.9 0.5 mm
+/score/mesh/translate 0 0 49.5 mm
 /score/mesh/nBin 10 10 5
 /score/quantity/energyDeposit eDep
 /score/close
@@ -20,4 +23,5 @@
 /gps/ene/mono 14 MeV
 /run/beamOn 1000
 
+/score/dumpQuantityToFile fullRodMesh eDep neutron_rod_edep.csv
 /score/dumpQuantityToFile prionMesh eDep neutron_edep.csv

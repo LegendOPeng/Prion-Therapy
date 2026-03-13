@@ -1,0 +1,177 @@
+{
+  "combinations": [
+    {
+      "combo": "gamma + neutron",
+      "rays": [
+        "gamma",
+        "neutron"
+      ],
+      "n_rays": 2,
+      "total_rbe_prion": 0.0,
+      "total_steel_mev": 4571.8133,
+      "mean_selectivity": 0.0,
+      "max_reach_mm": -0.5,
+      "coverage_bonus": 1.0,
+      "alpha_bonus": 1.0,
+      "score": -228.5907
+    },
+    {
+      "combo": "alpha + neutron",
+      "rays": [
+        "neutron",
+        "alpha"
+      ],
+      "n_rays": 2,
+      "total_rbe_prion": 0.0,
+      "total_steel_mev": 5206.9551,
+      "mean_selectivity": 0.0,
+      "max_reach_mm": -0.5,
+      "coverage_bonus": 1.0,
+      "alpha_bonus": 1.2,
+      "score": -260.3478
+    },
+    {
+      "combo": "alpha + gamma",
+      "rays": [
+        "gamma",
+        "alpha"
+      ],
+      "n_rays": 2,
+      "total_rbe_prion": 0.0,
+      "total_steel_mev": 8544.636,
+      "mean_selectivity": 0.0,
+      "max_reach_mm": -0.5,
+      "coverage_bonus": 1.0,
+      "alpha_bonus": 1.2,
+      "score": -427.2318
+    },
+    {
+      "combo": "alpha + gamma + neutron",
+      "rays": [
+        "gamma",
+        "neutron",
+        "alpha"
+      ],
+      "n_rays": 3,
+      "total_rbe_prion": 0.0,
+      "total_steel_mev": 9161.7022,
+      "mean_selectivity": 0.0,
+      "max_reach_mm": -0.5,
+      "coverage_bonus": 1.0,
+      "alpha_bonus": 1.2,
+      "score": -458.0851
+    },
+    {
+      "combo": "carbon + neutron",
+      "rays": [
+        "neutron",
+        "carbon"
+      ],
+      "n_rays": 2,
+      "total_rbe_prion": 0.0,
+      "total_steel_mev": 2704527.1171,
+      "mean_selectivity": 0.0,
+      "max_reach_mm": -0.5,
+      "coverage_bonus": 1.0,
+      "alpha_bonus": 1.0,
+      "score": -135226.3559
+    },
+    {
+      "combo": "carbon + gamma",
+      "rays": [
+        "gamma",
+        "carbon"
+      ],
+      "n_rays": 2,
+      "total_rbe_prion": 0.0,
+      "total_steel_mev": 2707864.798,
+      "mean_selectivity": 0.0,
+      "max_reach_mm": -0.5,
+      "coverage_bonus": 1.0,
+      "alpha_bonus": 1.0,
+      "score": -135393.2399
+    },
+    {
+      "combo": "carbon + gamma + neutron",
+      "rays": [
+        "gamma",
+        "neutron",
+        "carbon"
+      ],
+      "n_rays": 3,
+      "total_rbe_prion": 0.0,
+      "total_steel_mev": 2708481.8642,
+      "mean_selectivity": 0.0,
+      "max_reach_mm": -0.5,
+      "coverage_bonus": 1.0,
+      "alpha_bonus": 1.0,
+      "score": -135424.0932
+    },
+    {
+      "combo": "alpha + carbon",
+      "rays": [
+        "carbon",
+        "alpha"
+      ],
+      "n_rays": 2,
+      "total_rbe_prion": 0.0,
+      "total_steel_mev": 2708499.9398,
+      "mean_selectivity": 0.0,
+      "max_reach_mm": -31.5,
+      "coverage_bonus": 1.0,
+      "alpha_bonus": 1.2,
+      "score": -135424.997
+    },
+    {
+      "combo": "alpha + carbon + neutron",
+      "rays": [
+        "neutron",
+        "carbon",
+        "alpha"
+      ],
+      "n_rays": 3,
+      "total_rbe_prion": 0.0,
+      "total_steel_mev": 2709117.006,
+      "mean_selectivity": 0.0,
+      "max_reach_mm": -0.5,
+      "coverage_bonus": 1.0,
+      "alpha_bonus": 1.2,
+      "score": -135455.8503
+    },
+    {
+      "combo": "alpha + carbon + gamma",
+      "rays": [
+        "gamma",
+        "carbon",
+        "alpha"
+      ],
+      "n_rays": 3,
+      "total_rbe_prion": 0.0,
+      "total_steel_mev": 2712454.6869,
+      "mean_selectivity": 0.0,
+      "max_reach_mm": -0.5,
+      "coverage_bonus": 1.0,
+      "alpha_bonus": 1.2,
+      "score": -135622.7343
+    },
+    {
+      "combo": "alpha + carbon + gamma + neutron",
+      "rays": [
+        "gamma",
+        "neutron",
+        "carbon",
+        "alpha"
+      ],
+      "n_rays": 4,
+      "total_rbe_prion": 0.0,
+      "total_steel_mev": 2713071.7531,
+      "mean_selectivity": 0.0,
+      "max_reach_mm": -0.5,
+      "coverage_bonus": 1.0,
+      "alpha_bonus": 1.2,
+      "score": -135653.5877
+    }
+  ],
+  "best_combo": "gamma + neutron",
+  "best_score": -228.5907
+}

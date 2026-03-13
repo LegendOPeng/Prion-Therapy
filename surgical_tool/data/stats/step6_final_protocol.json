@@ -1,0 +1,27 @@
+{
+  "best_rays": [
+    "gamma",
+    "neutron"
+  ],
+  "best_order": "gamma \u2192 neutron",
+  "rep_stats": {
+    "reps": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "mean": 0.0,
+    "std": 0.0,
+    "cv_pct": 0,
+    "min": 0.0,
+    "max": 0.0
+  },
+  "n_reps": 10
+}

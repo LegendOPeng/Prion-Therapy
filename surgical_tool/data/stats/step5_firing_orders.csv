@@ -1,0 +1,13 @@
+order,rays,n_rays,mean_score,std_score,cv_pct,min_score,max_score
+gamma → neutron,"['gamma', 'neutron']",2,0.0,0.0,0,0.0,0.0
+neutron → gamma,"['neutron', 'gamma']",2,0.0,0.0,0,0.0,0.0
+neutron → alpha,"['neutron', 'alpha']",2,0.0,0.0,0,0.0,0.0
+alpha → neutron,"['alpha', 'neutron']",2,0.0,0.0,0,0.0,0.0
+gamma → alpha,"['gamma', 'alpha']",2,0.0,0.0,0,0.0,0.0
+alpha → gamma,"['alpha', 'gamma']",2,0.0,0.0,0,0.0,0.0
+gamma → neutron → alpha,"['gamma', 'neutron', 'alpha']",3,0.0,0.0,0,0.0,0.0
+gamma → alpha → neutron,"['gamma', 'alpha', 'neutron']",3,0.0,0.0,0,0.0,0.0
+neutron → gamma → alpha,"['neutron', 'gamma', 'alpha']",3,0.0,0.0,0,0.0,0.0
+neutron → alpha → gamma,"['neutron', 'alpha', 'gamma']",3,0.0,0.0,0,0.0,0.0
+alpha → gamma → neutron,"['alpha', 'gamma', 'neutron']",3,0.0,0.0,0,0.0,0.0
+alpha → neutron → gamma,"['alpha', 'neutron', 'gamma']",3,0.0,0.0,0,0.0,0.0

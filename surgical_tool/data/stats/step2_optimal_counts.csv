@@ -1,0 +1,5 @@
+Ray,OptimalN,PrionMeV,RBE_MeV,CV_pct,Efficiency
+gamma,500,0.0,0.0,0.0,0.0
+neutron,500,0.0,0.0,0.0,4e-06
+carbon,500,0.0,0.0,0.0,1e-06
+alpha,500,0.0,0.0,0.0,8e-06

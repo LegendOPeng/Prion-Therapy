@@ -1,0 +1,50 @@
+{
+  "gamma": {
+    "ray": "gamma",
+    "prion_mev": 0.0,
+    "steel_mev": 3954.7471,
+    "total_mev": 3954.7471,
+    "selectivity": 0.0,
+    "rbe": 1.0,
+    "rbe_prion_mev": 0.0,
+    "peak_z_mm": -46.5,
+    "max_reach_mm": -0.5,
+    "prion_pct": 0.0
+  },
+  "neutron": {
+    "ray": "neutron",
+    "prion_mev": 0.0,
+    "steel_mev": 617.0662,
+    "total_mev": 617.0662,
+    "selectivity": 0.0,
+    "rbe": 10.0,
+    "rbe_prion_mev": 0.0,
+    "peak_z_mm": -43.5,
+    "max_reach_mm": -0.5,
+    "prion_pct": 0.0
+  },
+  "carbon": {
+    "ray": "carbon",
+    "prion_mev": 0.0,
+    "steel_mev": 2703910.0509,
+    "total_mev": 2703910.0509,
+    "selectivity": 0.0,
+    "rbe": 3.0,
+    "rbe_prion_mev": 0.0,
+    "peak_z_mm": -39.5,
+    "max_reach_mm": -31.5,
+    "prion_pct": 0.0
+  },
+  "alpha": {
+    "ray": "alpha",
+    "prion_mev": 0.0,
+    "steel_mev": 4589.8889,
+    "total_mev": 4589.8889,
+    "selectivity": 0.0,
+    "rbe": 20.0,
+    "rbe_prion_mev": 0.0,
+    "peak_z_mm": -49.5,
+    "max_reach_mm": -49.5,
+    "prion_pct": 0.0
+  }
+}

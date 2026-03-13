@@ -1,0 +1,30 @@
+{
+  "gamma": {
+    "optimal_count": 500,
+    "prion_mev_at_optimal": 0.0,
+    "rbe_at_optimal": 0.0,
+    "cv_at_optimal": 0.0,
+    "efficiency_at_optimal": 0.0
+  },
+  "neutron": {
+    "optimal_count": 500,
+    "prion_mev_at_optimal": 0.0,
+    "rbe_at_optimal": 0.0,
+    "cv_at_optimal": 0.0,
+    "efficiency_at_optimal": 4e-06
+  },
+  "carbon": {
+    "optimal_count": 500,
+    "prion_mev_at_optimal": 0.0,
+    "rbe_at_optimal": 0.0,
+    "cv_at_optimal": 0.0,
+    "efficiency_at_optimal": 1e-06
+  },
+  "alpha": {
+    "optimal_count": 500,
+    "prion_mev_at_optimal": 0.0,
+    "rbe_at_optimal": 0.0,
+    "cv_at_optimal": 0.0,
+    "efficiency_at_optimal": 8e-06
+  }
+}

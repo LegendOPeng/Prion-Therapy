@@ -1,0 +1,38 @@
+{
+  "gamma": {
+    "n_reps": 20,
+    "opt_n": 500,
+    "mean_prion_mev": 0.0,
+    "std_prion_mev": 0.0,
+    "cv_pct": 0.0,
+    "rbe_mean": 0.0,
+    "stable": true
+  },
+  "neutron": {
+    "n_reps": 20,
+    "opt_n": 500,
+    "mean_prion_mev": 0.0,
+    "std_prion_mev": 0.0,
+    "cv_pct": 0.0,
+    "rbe_mean": 0.0,
+    "stable": true
+  },
+  "carbon": {
+    "n_reps": 20,
+    "opt_n": 500,
+    "mean_prion_mev": 0.0,
+    "std_prion_mev": 0.0,
+    "cv_pct": 0.0,
+    "rbe_mean": 0.0,
+    "stable": true
+  },
+  "alpha": {
+    "n_reps": 20,
+    "opt_n": 500,
+    "mean_prion_mev": 0.0,
+    "std_prion_mev": 0.0,
+    "cv_pct": 0.0,
+    "rbe_mean": 0.0,
+    "stable": true
+  }
+}
