@@ -1,30 +1,30 @@
 {
   "gamma": {
-    "optimal_count": 500,
-    "prion_mev_at_optimal": 0.0,
-    "rbe_at_optimal": 0.0,
-    "cv_at_optimal": 0.0,
-    "efficiency_at_optimal": 0.0
+    "optimal_count": 50000,
+    "rbe_at_optimal": 76.4844,
+    "cv_at_optimal": 7.781429492620914,
+    "icrp_safe_cap": 50000,
+    "efficiency": 1.529689
   },
   "neutron": {
-    "optimal_count": 500,
-    "prion_mev_at_optimal": 0.0,
-    "rbe_at_optimal": 0.0,
-    "cv_at_optimal": 0.0,
-    "efficiency_at_optimal": 4e-06
+    "optimal_count": 5000,
+    "rbe_at_optimal": 162.2532,
+    "cv_at_optimal": 25.96766466038467,
+    "icrp_safe_cap": 5000,
+    "efficiency": 32.45063
   },
   "carbon": {
-    "optimal_count": 500,
-    "prion_mev_at_optimal": 0.0,
-    "rbe_at_optimal": 0.0,
-    "cv_at_optimal": 0.0,
-    "efficiency_at_optimal": 1e-06
+    "optimal_count": 16607,
+    "rbe_at_optimal": 12849.2265,
+    "cv_at_optimal": 4.475912035059551,
+    "icrp_safe_cap": 16666,
+    "efficiency": 773.723519
   },
   "alpha": {
-    "optimal_count": 500,
-    "prion_mev_at_optimal": 0.0,
+    "optimal_count": 2500,
     "rbe_at_optimal": 0.0,
-    "cv_at_optimal": 0.0,
-    "efficiency_at_optimal": 8e-06
+    "cv_at_optimal": 999.0,
+    "icrp_safe_cap": 2500,
+    "efficiency": 0.0
   }
 }

@@ -1,5 +1,5 @@
 Ray,N_reps,Opt_N,Mean_MeV,Std_MeV,CV_pct,RBE_Mean,Stable
-gamma,20,500,0.0,0.0,0.0,0.0,True
-neutron,20,500,0.0,0.0,0.0,0.0,True
-carbon,20,500,0.0,0.0,0.0,0.0,True
-alpha,20,500,0.0,0.0,0.0,0.0,True
+gamma,20,20000,0.1788,0.0099,5.54,0.1788,False
+neutron,20,100,0.448,0.0218,4.87,4.4797,True
+carbon,20,100,0.6193,0.024,3.88,1.858,True
+alpha,20,20000,0.001,0.0001,5.49,0.0198,False

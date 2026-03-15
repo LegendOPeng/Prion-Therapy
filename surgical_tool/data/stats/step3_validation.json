@@ -1,38 +1,38 @@
 {
   "gamma": {
     "n_reps": 20,
-    "opt_n": 500,
-    "mean_prion_mev": 0.0,
-    "std_prion_mev": 0.0,
-    "cv_pct": 0.0,
-    "rbe_mean": 0.0,
-    "stable": true
+    "opt_n": 20000,
+    "mean_prion_mev": 0.1788,
+    "std_prion_mev": 0.0099,
+    "cv_pct": 5.54,
+    "rbe_mean": 0.1788,
+    "stable": false
   },
   "neutron": {
     "n_reps": 20,
-    "opt_n": 500,
-    "mean_prion_mev": 0.0,
-    "std_prion_mev": 0.0,
-    "cv_pct": 0.0,
-    "rbe_mean": 0.0,
+    "opt_n": 100,
+    "mean_prion_mev": 0.448,
+    "std_prion_mev": 0.0218,
+    "cv_pct": 4.87,
+    "rbe_mean": 4.4797,
     "stable": true
   },
   "carbon": {
     "n_reps": 20,
-    "opt_n": 500,
-    "mean_prion_mev": 0.0,
-    "std_prion_mev": 0.0,
-    "cv_pct": 0.0,
-    "rbe_mean": 0.0,
+    "opt_n": 100,
+    "mean_prion_mev": 0.6193,
+    "std_prion_mev": 0.024,
+    "cv_pct": 3.88,
+    "rbe_mean": 1.858,
     "stable": true
   },
   "alpha": {
     "n_reps": 20,
-    "opt_n": 500,
-    "mean_prion_mev": 0.0,
-    "std_prion_mev": 0.0,
-    "cv_pct": 0.0,
-    "rbe_mean": 0.0,
-    "stable": true
+    "opt_n": 20000,
+    "mean_prion_mev": 0.001,
+    "std_prion_mev": 0.0001,
+    "cv_pct": 5.49,
+    "rbe_mean": 0.0198,
+    "stable": false
   }
 }

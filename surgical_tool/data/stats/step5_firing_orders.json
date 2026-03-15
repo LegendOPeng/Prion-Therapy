@@ -1,339 +1,455 @@
 {
   "firing_orders": [
     {
-      "order": "gamma \u2192 neutron",
-      "rays": [
-        "gamma",
-        "neutron"
-      ],
-      "n_rays": 2,
-      "mean_score": 0.0,
-      "std_score": 0.0,
-      "cv_pct": 0,
-      "min_score": 0.0,
-      "max_score": 0.0
-    },
-    {
-      "order": "neutron \u2192 gamma",
-      "rays": [
-        "neutron",
-        "gamma"
-      ],
-      "n_rays": 2,
-      "mean_score": 0.0,
-      "std_score": 0.0,
-      "cv_pct": 0,
-      "min_score": 0.0,
-      "max_score": 0.0
-    },
-    {
-      "order": "neutron \u2192 alpha",
-      "rays": [
-        "neutron",
-        "alpha"
-      ],
-      "n_rays": 2,
-      "mean_score": 0.0,
-      "std_score": 0.0,
-      "cv_pct": 0,
-      "min_score": 0.0,
-      "max_score": 0.0
-    },
-    {
-      "order": "alpha \u2192 neutron",
-      "rays": [
-        "alpha",
-        "neutron"
-      ],
-      "n_rays": 2,
-      "mean_score": 0.0,
-      "std_score": 0.0,
-      "cv_pct": 0,
-      "min_score": 0.0,
-      "max_score": 0.0
-    },
-    {
-      "order": "gamma \u2192 alpha",
-      "rays": [
-        "gamma",
-        "alpha"
-      ],
-      "n_rays": 2,
-      "mean_score": 0.0,
-      "std_score": 0.0,
-      "cv_pct": 0,
-      "min_score": 0.0,
-      "max_score": 0.0
-    },
-    {
-      "order": "alpha \u2192 gamma",
-      "rays": [
-        "alpha",
-        "gamma"
-      ],
-      "n_rays": 2,
-      "mean_score": 0.0,
-      "std_score": 0.0,
-      "cv_pct": 0,
-      "min_score": 0.0,
-      "max_score": 0.0
-    },
-    {
-      "order": "gamma \u2192 neutron \u2192 alpha",
+      "order": "gamma \u2192 neutron \u2192 carbon",
       "rays": [
         "gamma",
         "neutron",
-        "alpha"
+        "carbon"
       ],
       "n_rays": 3,
-      "mean_score": 0.0,
-      "std_score": 0.0,
-      "cv_pct": 0,
-      "min_score": 0.0,
-      "max_score": 0.0
+      "mean_score": 974.0433,
+      "std_score": 30.914,
+      "cv_pct": 3.17,
+      "min_score": 925.2541,
+      "max_score": 1038.9266
     },
     {
-      "order": "gamma \u2192 alpha \u2192 neutron",
+      "order": "carbon \u2192 gamma \u2192 neutron",
       "rays": [
-        "gamma",
-        "alpha",
-        "neutron"
-      ],
-      "n_rays": 3,
-      "mean_score": 0.0,
-      "std_score": 0.0,
-      "cv_pct": 0,
-      "min_score": 0.0,
-      "max_score": 0.0
-    },
-    {
-      "order": "neutron \u2192 gamma \u2192 alpha",
-      "rays": [
-        "neutron",
-        "gamma",
-        "alpha"
-      ],
-      "n_rays": 3,
-      "mean_score": 0.0,
-      "std_score": 0.0,
-      "cv_pct": 0,
-      "min_score": 0.0,
-      "max_score": 0.0
-    },
-    {
-      "order": "neutron \u2192 alpha \u2192 gamma",
-      "rays": [
-        "neutron",
-        "alpha",
-        "gamma"
-      ],
-      "n_rays": 3,
-      "mean_score": 0.0,
-      "std_score": 0.0,
-      "cv_pct": 0,
-      "min_score": 0.0,
-      "max_score": 0.0
-    },
-    {
-      "order": "alpha \u2192 gamma \u2192 neutron",
-      "rays": [
-        "alpha",
+        "carbon",
         "gamma",
         "neutron"
       ],
       "n_rays": 3,
-      "mean_score": 0.0,
-      "std_score": 0.0,
-      "cv_pct": 0,
-      "min_score": 0.0,
-      "max_score": 0.0
+      "mean_score": 950.1855,
+      "std_score": 30.4897,
+      "cv_pct": 3.21,
+      "min_score": 883.8408,
+      "max_score": 1016.4368
     },
     {
-      "order": "alpha \u2192 neutron \u2192 gamma",
+      "order": "alpha \u2192 neutron \u2192 carbon",
       "rays": [
         "alpha",
+        "neutron",
+        "carbon"
+      ],
+      "n_rays": 3,
+      "mean_score": 919.7759,
+      "std_score": 28.3615,
+      "cv_pct": 3.08,
+      "min_score": 863.9235,
+      "max_score": 989.5293
+    },
+    {
+      "order": "gamma \u2192 carbon \u2192 neutron",
+      "rays": [
+        "gamma",
+        "carbon",
+        "neutron"
+      ],
+      "n_rays": 3,
+      "mean_score": 909.408,
+      "std_score": 32.7236,
+      "cv_pct": 3.6,
+      "min_score": 838.0555,
+      "max_score": 969.642
+    },
+    {
+      "order": "alpha \u2192 carbon \u2192 neutron",
+      "rays": [
+        "alpha",
+        "carbon",
+        "neutron"
+      ],
+      "n_rays": 3,
+      "mean_score": 893.3209,
+      "std_score": 27.5554,
+      "cv_pct": 3.08,
+      "min_score": 838.7894,
+      "max_score": 947.533
+    },
+    {
+      "order": "carbon \u2192 alpha \u2192 neutron",
+      "rays": [
+        "carbon",
+        "alpha",
+        "neutron"
+      ],
+      "n_rays": 3,
+      "mean_score": 890.304,
+      "std_score": 33.0039,
+      "cv_pct": 3.71,
+      "min_score": 824.4428,
+      "max_score": 979.7963
+    },
+    {
+      "order": "carbon \u2192 neutron \u2192 gamma",
+      "rays": [
+        "carbon",
         "neutron",
         "gamma"
       ],
       "n_rays": 3,
-      "mean_score": 0.0,
-      "std_score": 0.0,
-      "cv_pct": 0,
-      "min_score": 0.0,
-      "max_score": 0.0
+      "mean_score": 871.2863,
+      "std_score": 30.6848,
+      "cv_pct": 3.52,
+      "min_score": 801.9477,
+      "max_score": 945.6056
+    },
+    {
+      "order": "carbon \u2192 neutron",
+      "rays": [
+        "carbon",
+        "neutron"
+      ],
+      "n_rays": 2,
+      "mean_score": 864.2925,
+      "std_score": 26.3453,
+      "cv_pct": 3.05,
+      "min_score": 815.2818,
+      "max_score": 911.9487
+    },
+    {
+      "order": "carbon \u2192 neutron \u2192 alpha",
+      "rays": [
+        "carbon",
+        "neutron",
+        "alpha"
+      ],
+      "n_rays": 3,
+      "mean_score": 860.7371,
+      "std_score": 20.9362,
+      "cv_pct": 2.43,
+      "min_score": 825.7137,
+      "max_score": 913.7014
+    },
+    {
+      "order": "neutron \u2192 gamma \u2192 carbon",
+      "rays": [
+        "neutron",
+        "gamma",
+        "carbon"
+      ],
+      "n_rays": 3,
+      "mean_score": 842.5984,
+      "std_score": 25.0549,
+      "cv_pct": 2.97,
+      "min_score": 759.1522,
+      "max_score": 880.8382
+    },
+    {
+      "order": "neutron \u2192 carbon \u2192 gamma",
+      "rays": [
+        "neutron",
+        "carbon",
+        "gamma"
+      ],
+      "n_rays": 3,
+      "mean_score": 836.6175,
+      "std_score": 23.5955,
+      "cv_pct": 2.82,
+      "min_score": 796.0186,
+      "max_score": 891.9753
+    },
+    {
+      "order": "neutron \u2192 carbon",
+      "rays": [
+        "neutron",
+        "carbon"
+      ],
+      "n_rays": 2,
+      "mean_score": 825.707,
+      "std_score": 21.5752,
+      "cv_pct": 2.61,
+      "min_score": 784.9798,
+      "max_score": 880.8251
+    },
+    {
+      "order": "neutron \u2192 alpha \u2192 carbon",
+      "rays": [
+        "neutron",
+        "alpha",
+        "carbon"
+      ],
+      "n_rays": 3,
+      "mean_score": 824.3812,
+      "std_score": 20.6866,
+      "cv_pct": 2.51,
+      "min_score": 765.096,
+      "max_score": 853.11
+    },
+    {
+      "order": "neutron \u2192 carbon \u2192 alpha",
+      "rays": [
+        "neutron",
+        "carbon",
+        "alpha"
+      ],
+      "n_rays": 3,
+      "mean_score": 821.9766,
+      "std_score": 26.1703,
+      "cv_pct": 3.18,
+      "min_score": 774.7953,
+      "max_score": 875.5282
+    },
+    {
+      "order": "alpha \u2192 carbon",
+      "rays": [
+        "alpha",
+        "carbon"
+      ],
+      "n_rays": 2,
+      "mean_score": 237.1978,
+      "std_score": 7.8602,
+      "cv_pct": 3.31,
+      "min_score": 220.048,
+      "max_score": 249.3022
+    },
+    {
+      "order": "carbon \u2192 alpha",
+      "rays": [
+        "carbon",
+        "alpha"
+      ],
+      "n_rays": 2,
+      "mean_score": 212.1392,
+      "std_score": 9.2322,
+      "cv_pct": 4.35,
+      "min_score": 197.0868,
+      "max_score": 232.7802
     }
   ],
-  "best_order": "gamma \u2192 neutron",
-  "best_score": 0.0,
+  "best_order": "gamma \u2192 neutron \u2192 carbon",
+  "best_score": 974.0433,
   "all_orders_by_combo": {
-    "gamma + neutron": [
+    "carbon + neutron": [
       {
-        "order": "gamma \u2192 neutron",
+        "order": "carbon \u2192 neutron",
         "rays": [
-          "gamma",
+          "carbon",
           "neutron"
         ],
         "n_rays": 2,
-        "mean_score": 0.0,
-        "std_score": 0.0,
-        "cv_pct": 0,
-        "min_score": 0.0,
-        "max_score": 0.0
+        "mean_score": 864.2925,
+        "std_score": 26.3453,
+        "cv_pct": 3.05,
+        "min_score": 815.2818,
+        "max_score": 911.9487
       },
       {
-        "order": "neutron \u2192 gamma",
+        "order": "neutron \u2192 carbon",
         "rays": [
           "neutron",
-          "gamma"
+          "carbon"
         ],
         "n_rays": 2,
-        "mean_score": 0.0,
-        "std_score": 0.0,
-        "cv_pct": 0,
-        "min_score": 0.0,
-        "max_score": 0.0
+        "mean_score": 825.707,
+        "std_score": 21.5752,
+        "cv_pct": 2.61,
+        "min_score": 784.9798,
+        "max_score": 880.8251
       }
     ],
-    "alpha + neutron": [
+    "alpha + carbon + neutron": [
       {
-        "order": "neutron \u2192 alpha",
+        "order": "alpha \u2192 neutron \u2192 carbon",
         "rays": [
+          "alpha",
           "neutron",
-          "alpha"
+          "carbon"
         ],
-        "n_rays": 2,
-        "mean_score": 0.0,
-        "std_score": 0.0,
-        "cv_pct": 0,
-        "min_score": 0.0,
-        "max_score": 0.0
+        "n_rays": 3,
+        "mean_score": 919.7759,
+        "std_score": 28.3615,
+        "cv_pct": 3.08,
+        "min_score": 863.9235,
+        "max_score": 989.5293
       },
       {
-        "order": "alpha \u2192 neutron",
+        "order": "alpha \u2192 carbon \u2192 neutron",
         "rays": [
+          "alpha",
+          "carbon",
+          "neutron"
+        ],
+        "n_rays": 3,
+        "mean_score": 893.3209,
+        "std_score": 27.5554,
+        "cv_pct": 3.08,
+        "min_score": 838.7894,
+        "max_score": 947.533
+      },
+      {
+        "order": "carbon \u2192 alpha \u2192 neutron",
+        "rays": [
+          "carbon",
           "alpha",
           "neutron"
         ],
-        "n_rays": 2,
-        "mean_score": 0.0,
-        "std_score": 0.0,
-        "cv_pct": 0,
-        "min_score": 0.0,
-        "max_score": 0.0
+        "n_rays": 3,
+        "mean_score": 890.304,
+        "std_score": 33.0039,
+        "cv_pct": 3.71,
+        "min_score": 824.4428,
+        "max_score": 979.7963
+      },
+      {
+        "order": "carbon \u2192 neutron \u2192 alpha",
+        "rays": [
+          "carbon",
+          "neutron",
+          "alpha"
+        ],
+        "n_rays": 3,
+        "mean_score": 860.7371,
+        "std_score": 20.9362,
+        "cv_pct": 2.43,
+        "min_score": 825.7137,
+        "max_score": 913.7014
+      },
+      {
+        "order": "neutron \u2192 alpha \u2192 carbon",
+        "rays": [
+          "neutron",
+          "alpha",
+          "carbon"
+        ],
+        "n_rays": 3,
+        "mean_score": 824.3812,
+        "std_score": 20.6866,
+        "cv_pct": 2.51,
+        "min_score": 765.096,
+        "max_score": 853.11
+      },
+      {
+        "order": "neutron \u2192 carbon \u2192 alpha",
+        "rays": [
+          "neutron",
+          "carbon",
+          "alpha"
+        ],
+        "n_rays": 3,
+        "mean_score": 821.9766,
+        "std_score": 26.1703,
+        "cv_pct": 3.18,
+        "min_score": 774.7953,
+        "max_score": 875.5282
       }
     ],
-    "alpha + gamma": [
+    "alpha + carbon": [
       {
-        "order": "gamma \u2192 alpha",
+        "order": "alpha \u2192 carbon",
         "rays": [
-          "gamma",
+          "alpha",
+          "carbon"
+        ],
+        "n_rays": 2,
+        "mean_score": 237.1978,
+        "std_score": 7.8602,
+        "cv_pct": 3.31,
+        "min_score": 220.048,
+        "max_score": 249.3022
+      },
+      {
+        "order": "carbon \u2192 alpha",
+        "rays": [
+          "carbon",
           "alpha"
         ],
         "n_rays": 2,
-        "mean_score": 0.0,
-        "std_score": 0.0,
-        "cv_pct": 0,
-        "min_score": 0.0,
-        "max_score": 0.0
-      },
-      {
-        "order": "alpha \u2192 gamma",
-        "rays": [
-          "alpha",
-          "gamma"
-        ],
-        "n_rays": 2,
-        "mean_score": 0.0,
-        "std_score": 0.0,
-        "cv_pct": 0,
-        "min_score": 0.0,
-        "max_score": 0.0
+        "mean_score": 212.1392,
+        "std_score": 9.2322,
+        "cv_pct": 4.35,
+        "min_score": 197.0868,
+        "max_score": 232.7802
       }
     ],
-    "alpha + gamma + neutron": [
+    "carbon + gamma + neutron": [
       {
-        "order": "gamma \u2192 neutron \u2192 alpha",
+        "order": "gamma \u2192 neutron \u2192 carbon",
         "rays": [
           "gamma",
           "neutron",
-          "alpha"
+          "carbon"
         ],
         "n_rays": 3,
-        "mean_score": 0.0,
-        "std_score": 0.0,
-        "cv_pct": 0,
-        "min_score": 0.0,
-        "max_score": 0.0
+        "mean_score": 974.0433,
+        "std_score": 30.914,
+        "cv_pct": 3.17,
+        "min_score": 925.2541,
+        "max_score": 1038.9266
       },
       {
-        "order": "gamma \u2192 alpha \u2192 neutron",
+        "order": "carbon \u2192 gamma \u2192 neutron",
         "rays": [
-          "gamma",
-          "alpha",
-          "neutron"
-        ],
-        "n_rays": 3,
-        "mean_score": 0.0,
-        "std_score": 0.0,
-        "cv_pct": 0,
-        "min_score": 0.0,
-        "max_score": 0.0
-      },
-      {
-        "order": "neutron \u2192 gamma \u2192 alpha",
-        "rays": [
-          "neutron",
-          "gamma",
-          "alpha"
-        ],
-        "n_rays": 3,
-        "mean_score": 0.0,
-        "std_score": 0.0,
-        "cv_pct": 0,
-        "min_score": 0.0,
-        "max_score": 0.0
-      },
-      {
-        "order": "neutron \u2192 alpha \u2192 gamma",
-        "rays": [
-          "neutron",
-          "alpha",
-          "gamma"
-        ],
-        "n_rays": 3,
-        "mean_score": 0.0,
-        "std_score": 0.0,
-        "cv_pct": 0,
-        "min_score": 0.0,
-        "max_score": 0.0
-      },
-      {
-        "order": "alpha \u2192 gamma \u2192 neutron",
-        "rays": [
-          "alpha",
+          "carbon",
           "gamma",
           "neutron"
         ],
         "n_rays": 3,
-        "mean_score": 0.0,
-        "std_score": 0.0,
-        "cv_pct": 0,
-        "min_score": 0.0,
-        "max_score": 0.0
+        "mean_score": 950.1855,
+        "std_score": 30.4897,
+        "cv_pct": 3.21,
+        "min_score": 883.8408,
+        "max_score": 1016.4368
       },
       {
-        "order": "alpha \u2192 neutron \u2192 gamma",
+        "order": "gamma \u2192 carbon \u2192 neutron",
         "rays": [
-          "alpha",
+          "gamma",
+          "carbon",
+          "neutron"
+        ],
+        "n_rays": 3,
+        "mean_score": 909.408,
+        "std_score": 32.7236,
+        "cv_pct": 3.6,
+        "min_score": 838.0555,
+        "max_score": 969.642
+      },
+      {
+        "order": "carbon \u2192 neutron \u2192 gamma",
+        "rays": [
+          "carbon",
           "neutron",
           "gamma"
         ],
         "n_rays": 3,
-        "mean_score": 0.0,
-        "std_score": 0.0,
-        "cv_pct": 0,
-        "min_score": 0.0,
-        "max_score": 0.0
+        "mean_score": 871.2863,
+        "std_score": 30.6848,
+        "cv_pct": 3.52,
+        "min_score": 801.9477,
+        "max_score": 945.6056
+      },
+      {
+        "order": "neutron \u2192 gamma \u2192 carbon",
+        "rays": [
+          "neutron",
+          "gamma",
+          "carbon"
+        ],
+        "n_rays": 3,
+        "mean_score": 842.5984,
+        "std_score": 25.0549,
+        "cv_pct": 2.97,
+        "min_score": 759.1522,
+        "max_score": 880.8382
+      },
+      {
+        "order": "neutron \u2192 carbon \u2192 gamma",
+        "rays": [
+          "neutron",
+          "carbon",
+          "gamma"
+        ],
+        "n_rays": 3,
+        "mean_score": 836.6175,
+        "std_score": 23.5955,
+        "cv_pct": 2.82,
+        "min_score": 796.0186,
+        "max_score": 891.9753
       }
     ]
   }

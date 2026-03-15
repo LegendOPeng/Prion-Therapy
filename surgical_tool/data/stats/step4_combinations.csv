@@ -1,12 +1,12 @@
 combo,rays,n_rays,total_rbe_prion,total_steel_mev,mean_selectivity,max_reach_mm,coverage_bonus,alpha_bonus,score
-gamma + neutron,"['gamma', 'neutron']",2,0.0,4571.8133,0.0,-0.5,1.0,1.0,-228.5907
-alpha + neutron,"['neutron', 'alpha']",2,0.0,5206.9551,0.0,-0.5,1.0,1.2,-260.3478
-alpha + gamma,"['gamma', 'alpha']",2,0.0,8544.636,0.0,-0.5,1.0,1.2,-427.2318
-alpha + gamma + neutron,"['gamma', 'neutron', 'alpha']",3,0.0,9161.7022,0.0,-0.5,1.0,1.2,-458.0851
-carbon + neutron,"['neutron', 'carbon']",2,0.0,2704527.1171,0.0,-0.5,1.0,1.0,-135226.3559
-carbon + gamma,"['gamma', 'carbon']",2,0.0,2707864.798,0.0,-0.5,1.0,1.0,-135393.2399
-carbon + gamma + neutron,"['gamma', 'neutron', 'carbon']",3,0.0,2708481.8642,0.0,-0.5,1.0,1.0,-135424.0932
-alpha + carbon,"['carbon', 'alpha']",2,0.0,2708499.9398,0.0,-31.5,1.0,1.2,-135424.997
-alpha + carbon + neutron,"['neutron', 'carbon', 'alpha']",3,0.0,2709117.006,0.0,-0.5,1.0,1.2,-135455.8503
-alpha + carbon + gamma,"['gamma', 'carbon', 'alpha']",3,0.0,2712454.6869,0.0,-0.5,1.0,1.2,-135622.7343
-alpha + carbon + gamma + neutron,"['gamma', 'neutron', 'carbon', 'alpha']",4,0.0,2713071.7531,0.0,-0.5,1.0,1.2,-135653.5877
+carbon + neutron,"['neutron', 'carbon']",2,1590.5864,3246.1663,0.2782,49.5,1.0,1.0,280.1133
+alpha + carbon + neutron,"['neutron', 'carbon', 'alpha']",3,1590.5864,3490.3967,0.1854,49.5,1.0,1.2,179.4175
+alpha + carbon,"['carbon', 'alpha']",2,426.9847,519.4872,0.2586,49.5,1.0,1.2,106.5019
+carbon + gamma + neutron,"['gamma', 'neutron', 'carbon']",3,1592.4677,4345.0854,0.186,49.5,1.0,1.0,78.9447
+carbon + gamma,"['gamma', 'carbon']",2,428.866,1374.1759,0.2594,49.5,1.0,1.0,42.539
+alpha + carbon + gamma + neutron,"['gamma', 'neutron', 'carbon', 'alpha']",4,1592.4677,4589.3158,0.1395,49.5,1.0,1.2,37.1133
+alpha + carbon + gamma,"['gamma', 'carbon', 'alpha']",3,428.866,1618.4063,0.1729,49.5,1.0,1.2,8.078
+alpha + gamma,"['gamma', 'alpha']",2,1.8813,1343.1495,0.0008,49.5,1.0,1.2,-67.1556
+alpha + neutron,"['neutron', 'alpha']",2,1163.6017,3215.1399,0.0196,49.5,1.0,1.2,-133.3891
+gamma + neutron,"['gamma', 'neutron']",2,1165.483,4069.8286,0.0204,49.5,1.0,1.0,-179.6573
+alpha + gamma + neutron,"['gamma', 'neutron', 'alpha']",3,1165.483,4314.059,0.0136,49.5,1.0,1.2,-196.6356

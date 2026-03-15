@@ -1,3 +1,4 @@
 Ray,Order,Mean_RBE_MeV,Std_RBE_MeV,CV_pct
-gamma,1,0.0,0.0,0
-neutron,2,0.0,0.0,0
+gamma,1,764.401,0.0,0.0
+neutron,2,764.401,0.0,0.0
+carbon,3,764.401,0.0,0.0
