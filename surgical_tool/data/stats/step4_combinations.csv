@@ -1,12 +1,12 @@
-combo,rays,n_rays,total_rbe_prion,total_steel_mev,mean_selectivity,max_reach_mm,coverage_bonus,alpha_bonus,score
-carbon + neutron,"['neutron', 'carbon']",2,1590.5864,3246.1663,0.2782,49.5,1.0,1.0,280.1133
-alpha + carbon + neutron,"['neutron', 'carbon', 'alpha']",3,1590.5864,3490.3967,0.1854,49.5,1.0,1.2,179.4175
-alpha + carbon,"['carbon', 'alpha']",2,426.9847,519.4872,0.2586,49.5,1.0,1.2,106.5019
-carbon + gamma + neutron,"['gamma', 'neutron', 'carbon']",3,1592.4677,4345.0854,0.186,49.5,1.0,1.0,78.9447
-carbon + gamma,"['gamma', 'carbon']",2,428.866,1374.1759,0.2594,49.5,1.0,1.0,42.539
-alpha + carbon + gamma + neutron,"['gamma', 'neutron', 'carbon', 'alpha']",4,1592.4677,4589.3158,0.1395,49.5,1.0,1.2,37.1133
-alpha + carbon + gamma,"['gamma', 'carbon', 'alpha']",3,428.866,1618.4063,0.1729,49.5,1.0,1.2,8.078
-alpha + gamma,"['gamma', 'alpha']",2,1.8813,1343.1495,0.0008,49.5,1.0,1.2,-67.1556
-alpha + neutron,"['neutron', 'alpha']",2,1163.6017,3215.1399,0.0196,49.5,1.0,1.2,-133.3891
-gamma + neutron,"['gamma', 'neutron']",2,1165.483,4069.8286,0.0204,49.5,1.0,1.0,-179.6573
-alpha + gamma + neutron,"['gamma', 'neutron', 'alpha']",3,1165.483,4314.059,0.0136,49.5,1.0,1.2,-196.6356
+Combo,N_Rays,PrionMeV,SteelMeV,SurfCore,Selectivity,Score
+neutron + alpha,2,11569.9485,3193.1541,0.276,3.623361,40456.2202
+gamma + neutron + alpha,3,11616.5803,200880.5575,17.2926,0.057828,671.3788
+gamma + alpha,2,11511.4441,197687.4034,17.1731,0.058231,669.9275
+neutron + carbon + alpha,3,189815.6925,63012250.4538,331.9654,0.003012,571.7763
+carbon + alpha,2,189710.5563,63009057.2997,332.1326,0.003011,571.172
+gamma + neutron + carbon + alpha,4,189862.3243,63209937.8572,332.9251,0.003004,570.2682
+gamma + carbon + alpha,3,189757.1881,63206744.7031,333.0928,0.003002,569.6656
+neutron + carbon,2,178350.8802,63012250.4538,353.305,0.00283,504.7929
+gamma + neutron + carbon,3,178397.512,63209937.8572,354.3207,0.002822,503.4774
+gamma + carbon,2,178292.3758,63206744.7031,354.5118,0.002821,502.9095
+gamma + neutron,2,151.768,200880.5575,1323.6027,0.000756,0.1147

@@ -1,30 +1,30 @@
 {
   "gamma": {
     "optimal_count": 50000,
-    "rbe_at_optimal": 76.4844,
-    "cv_at_optimal": 7.781429492620914,
+    "rbe_at_optimal": 1.8711,
+    "cv_at_optimal": 11.115847943051039,
     "icrp_safe_cap": 50000,
-    "efficiency": 1.529689
+    "efficiency": 0.037422
   },
   "neutron": {
     "optimal_count": 5000,
-    "rbe_at_optimal": 162.2532,
-    "cv_at_optimal": 25.96766466038467,
+    "rbe_at_optimal": 401.4561,
+    "cv_at_optimal": 25.861247130120624,
     "icrp_safe_cap": 5000,
-    "efficiency": 32.45063
+    "efficiency": 80.29122
   },
   "carbon": {
-    "optimal_count": 16607,
-    "rbe_at_optimal": 12849.2265,
-    "cv_at_optimal": 4.475912035059551,
+    "optimal_count": 16666,
+    "rbe_at_optimal": 64413.1586,
+    "cv_at_optimal": 7.132852839402245,
     "icrp_safe_cap": 16666,
-    "efficiency": 773.723519
+    "efficiency": 3864.944112
   },
   "alpha": {
     "optimal_count": 2500,
-    "rbe_at_optimal": 0.0,
-    "cv_at_optimal": 999.0,
+    "rbe_at_optimal": 185151.4602,
+    "cv_at_optimal": 5.55627837498881,
     "icrp_safe_cap": 2500,
-    "efficiency": 0.0
+    "efficiency": 74060.584079
   }
 }

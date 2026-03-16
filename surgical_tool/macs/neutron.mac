@@ -11,10 +11,10 @@
 /gps/particle neutron
 /gps/pos/type Plane
 /gps/pos/shape Rectangle
-/gps/pos/centre 0 0 -49 mm
+/gps/pos/centre 0 0 60 mm
 /gps/pos/halfx 4 mm
 /gps/pos/halfy 4 mm
-/gps/direction 0 0 1
+/gps/direction 0 0 -1
 /gps/ene/mono 14 MeV
 /run/beamOn 2000
 

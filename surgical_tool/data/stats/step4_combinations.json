@@ -1,84 +1,84 @@
 {
   "combinations": [
     {
-      "combo": "carbon + neutron",
+      "combo": "neutron + alpha",
       "rays": [
         "neutron",
-        "carbon"
+        "alpha"
       ],
       "n_rays": 2,
-      "total_rbe_prion": 1590.5864,
-      "total_steel_mev": 3246.1663,
-      "mean_selectivity": 0.2782,
-      "max_reach_mm": 49.5,
-      "coverage_bonus": 1.0,
-      "alpha_bonus": 1.0,
-      "score": 280.1133
+      "viable_rays": 2,
+      "prion_mev": 11569.9485,
+      "steel_mev": 3193.1541,
+      "total_mev": 14763.1026,
+      "surf_core": 0.276,
+      "selectivity": 3.623361,
+      "score": 40456.2202
     },
     {
-      "combo": "alpha + carbon + neutron",
+      "combo": "gamma + neutron + alpha",
+      "rays": [
+        "gamma",
+        "neutron",
+        "alpha"
+      ],
+      "n_rays": 3,
+      "viable_rays": 3,
+      "prion_mev": 11616.5803,
+      "steel_mev": 200880.5575,
+      "total_mev": 212497.1378,
+      "surf_core": 17.2926,
+      "selectivity": 0.057828,
+      "score": 671.3788
+    },
+    {
+      "combo": "gamma + alpha",
+      "rays": [
+        "gamma",
+        "alpha"
+      ],
+      "n_rays": 2,
+      "viable_rays": 2,
+      "prion_mev": 11511.4441,
+      "steel_mev": 197687.4034,
+      "total_mev": 209198.8475,
+      "surf_core": 17.1731,
+      "selectivity": 0.058231,
+      "score": 669.9275
+    },
+    {
+      "combo": "neutron + carbon + alpha",
       "rays": [
         "neutron",
         "carbon",
         "alpha"
       ],
       "n_rays": 3,
-      "total_rbe_prion": 1590.5864,
-      "total_steel_mev": 3490.3967,
-      "mean_selectivity": 0.1854,
-      "max_reach_mm": 49.5,
-      "coverage_bonus": 1.0,
-      "alpha_bonus": 1.2,
-      "score": 179.4175
+      "viable_rays": 3,
+      "prion_mev": 189815.6925,
+      "steel_mev": 63012250.4538,
+      "total_mev": 63202066.1462,
+      "surf_core": 331.9654,
+      "selectivity": 0.003012,
+      "score": 571.7763
     },
     {
-      "combo": "alpha + carbon",
+      "combo": "carbon + alpha",
       "rays": [
         "carbon",
         "alpha"
       ],
       "n_rays": 2,
-      "total_rbe_prion": 426.9847,
-      "total_steel_mev": 519.4872,
-      "mean_selectivity": 0.2586,
-      "max_reach_mm": 49.5,
-      "coverage_bonus": 1.0,
-      "alpha_bonus": 1.2,
-      "score": 106.5019
+      "viable_rays": 2,
+      "prion_mev": 189710.5563,
+      "steel_mev": 63009057.2997,
+      "total_mev": 63198767.856,
+      "surf_core": 332.1326,
+      "selectivity": 0.003011,
+      "score": 571.172
     },
     {
-      "combo": "carbon + gamma + neutron",
-      "rays": [
-        "gamma",
-        "neutron",
-        "carbon"
-      ],
-      "n_rays": 3,
-      "total_rbe_prion": 1592.4677,
-      "total_steel_mev": 4345.0854,
-      "mean_selectivity": 0.186,
-      "max_reach_mm": 49.5,
-      "coverage_bonus": 1.0,
-      "alpha_bonus": 1.0,
-      "score": 78.9447
-    },
-    {
-      "combo": "carbon + gamma",
-      "rays": [
-        "gamma",
-        "carbon"
-      ],
-      "n_rays": 2,
-      "total_rbe_prion": 428.866,
-      "total_steel_mev": 1374.1759,
-      "mean_selectivity": 0.2594,
-      "max_reach_mm": 49.5,
-      "coverage_bonus": 1.0,
-      "alpha_bonus": 1.0,
-      "score": 42.539
-    },
-    {
-      "combo": "alpha + carbon + gamma + neutron",
+      "combo": "gamma + neutron + carbon + alpha",
       "rays": [
         "gamma",
         "neutron",
@@ -86,92 +86,76 @@
         "alpha"
       ],
       "n_rays": 4,
-      "total_rbe_prion": 1592.4677,
-      "total_steel_mev": 4589.3158,
-      "mean_selectivity": 0.1395,
-      "max_reach_mm": 49.5,
-      "coverage_bonus": 1.0,
-      "alpha_bonus": 1.2,
-      "score": 37.1133
+      "viable_rays": 4,
+      "prion_mev": 189862.3243,
+      "steel_mev": 63209937.8572,
+      "total_mev": 63399800.1814,
+      "surf_core": 332.9251,
+      "selectivity": 0.003004,
+      "score": 570.2682
     },
     {
-      "combo": "alpha + carbon + gamma",
+      "combo": "gamma + carbon + alpha",
       "rays": [
         "gamma",
         "carbon",
         "alpha"
       ],
       "n_rays": 3,
-      "total_rbe_prion": 428.866,
-      "total_steel_mev": 1618.4063,
-      "mean_selectivity": 0.1729,
-      "max_reach_mm": 49.5,
-      "coverage_bonus": 1.0,
-      "alpha_bonus": 1.2,
-      "score": 8.078
+      "viable_rays": 3,
+      "prion_mev": 189757.1881,
+      "steel_mev": 63206744.7031,
+      "total_mev": 63396501.8912,
+      "surf_core": 333.0928,
+      "selectivity": 0.003002,
+      "score": 569.6656
     },
     {
-      "combo": "alpha + gamma",
-      "rays": [
-        "gamma",
-        "alpha"
-      ],
-      "n_rays": 2,
-      "total_rbe_prion": 1.8813,
-      "total_steel_mev": 1343.1495,
-      "mean_selectivity": 0.0008,
-      "max_reach_mm": 49.5,
-      "coverage_bonus": 1.0,
-      "alpha_bonus": 1.2,
-      "score": -67.1556
-    },
-    {
-      "combo": "alpha + neutron",
+      "combo": "neutron + carbon",
       "rays": [
         "neutron",
-        "alpha"
+        "carbon"
       ],
       "n_rays": 2,
-      "total_rbe_prion": 1163.6017,
-      "total_steel_mev": 3215.1399,
-      "mean_selectivity": 0.0196,
-      "max_reach_mm": 49.5,
-      "coverage_bonus": 1.0,
-      "alpha_bonus": 1.2,
-      "score": -133.3891
+      "viable_rays": 2,
+      "prion_mev": 178350.8802,
+      "steel_mev": 63012250.4538,
+      "total_mev": 63190601.3339,
+      "surf_core": 353.305,
+      "selectivity": 0.00283,
+      "score": 504.7929
     },
     {
-      "combo": "gamma + neutron",
-      "rays": [
-        "gamma",
-        "neutron"
-      ],
-      "n_rays": 2,
-      "total_rbe_prion": 1165.483,
-      "total_steel_mev": 4069.8286,
-      "mean_selectivity": 0.0204,
-      "max_reach_mm": 49.5,
-      "coverage_bonus": 1.0,
-      "alpha_bonus": 1.0,
-      "score": -179.6573
-    },
-    {
-      "combo": "alpha + gamma + neutron",
+      "combo": "gamma + neutron + carbon",
       "rays": [
         "gamma",
         "neutron",
-        "alpha"
+        "carbon"
       ],
       "n_rays": 3,
-      "total_rbe_prion": 1165.483,
-      "total_steel_mev": 4314.059,
-      "mean_selectivity": 0.0136,
-      "max_reach_mm": 49.5,
-      "coverage_bonus": 1.0,
-      "alpha_bonus": 1.2,
-      "score": -196.6356
+      "viable_rays": 3,
+      "prion_mev": 178397.512,
+      "steel_mev": 63209937.8572,
+      "total_mev": 63388335.3691,
+      "surf_core": 354.3207,
+      "selectivity": 0.002822,
+      "score": 503.4774
+    },
+    {
+      "combo": "gamma + carbon",
+      "rays": [
+        "gamma",
+        "carbon"
+      ],
+      "n_rays": 2,
+      "viable_rays": 2,
+      "prion_mev": 178292.3758,
+      "steel_mev": 63206744.7031,
+      "total_mev": 63385037.0789,
+      "surf_core": 354.5118,
+      "selectivity": 0.002821,
+      "score": 502.9095
     }
   ],
-  "best_combo": "carbon + neutron",
-  "best_score": 280.1133
+  "best": "neutron + alpha"
 }

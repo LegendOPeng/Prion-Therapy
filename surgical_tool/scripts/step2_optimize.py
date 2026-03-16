@@ -16,7 +16,7 @@ STEPS_DIR = os.path.join(ROOT, "Steps", "Step2_Opt")
 os.makedirs(STEPS_DIR, exist_ok=True)
 
 NX, NY, NZ  = 10, 10, 100
-PRION_BINS  = list(range(95, 100))
+PRION_BINS  = [99]
 RAYS        = ["gamma", "neutron", "carbon", "alpha"]
 RBE         = {"gamma": 1.0, "neutron": 10.0, "carbon": 3.0, "alpha": 20.0}
 STYLES      = {"gamma": "#3498db", "neutron": "#2ecc71", "carbon": "#9b59b6", "alpha": "#e74c3c"}

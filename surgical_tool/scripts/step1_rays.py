@@ -20,8 +20,8 @@ os.makedirs(STATS_DIR, exist_ok=True)
 NX, NY, NZ  = 10, 10, 100
 BOX_Z_MM    = 100.0
 VOXEL_Z_MM  = BOX_Z_MM / NZ
-PRION_BINS  = list(range(95, 100))
-STEEL_BINS  = list(range(0, 95))
+PRION_BINS  = [99]
+STEEL_BINS  = list(range(0, 99))
 
 RBE = {"gamma": 1.0, "neutron": 10.0, "carbon": 3.0, "alpha": 20.0}
 STYLES = {

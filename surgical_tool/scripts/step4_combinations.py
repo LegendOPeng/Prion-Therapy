@@ -1,162 +1,195 @@
 """
-Step 4: Ray Combinations — Surgical Tool
+Step 4: Multi-Ray Combinations — Surgical Tool
+Tests all 2, 3, 4-ray combos by additively combining
+real Geant4 grids at optimal counts from Step 2/3.
+Score = prion_mev / (surf_core_ratio + 0.01)
 """
 import numpy as np
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from itertools import combinations
-from matplotlib.patches import Patch
-import os, csv, json
+import os, csv, json, math
 
 ROOT      = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_DIR  = os.path.join(ROOT, "data")
 STATS_DIR = os.path.join(ROOT, "data", "stats")
 STEPS_DIR = os.path.join(ROOT, "Steps", "Step4_Combos")
 os.makedirs(STEPS_DIR, exist_ok=True)
 
-RAYS   = ["gamma", "neutron", "carbon", "alpha"]
-RBE    = {"gamma":1.0,"neutron":10.0,"alpha":20.0,"carbon":3.0}
-STYLES = {"gamma":"#3498db","alpha":"#e74c3c","neutron":"#2ecc71","carbon":"#9b59b6"}
-COMBO_COLORS = {2:"#3498db", 3:"#2ecc71", 4:"#e74c3c"}
-
-INTERACTION = {
-    ("gamma","neutron"):1.25, ("gamma","carbon"):1.20,  ("gamma","alpha"):1.10,
-    ("neutron","gamma"):1.05, ("neutron","carbon"):1.15, ("neutron","alpha"):1.08,
-    ("carbon","gamma"):1.10,  ("carbon","neutron"):1.12, ("carbon","alpha"):1.05,
-    ("alpha","gamma"):1.15,   ("alpha","neutron"):1.18,  ("alpha","carbon"):1.12,
-}
+NX, NY, NZ  = 10, 10, 100
+PRION_BINS  = [99]
+STEEL_BINS  = list(range(0, 99))
+RAYS        = ["gamma", "neutron", "carbon", "alpha"]
+RBE         = {"gamma": 1.0, "neutron": 10.0, "carbon": 3.0, "alpha": 20.0}
+STYLES      = {"gamma": "#3498db", "neutron": "#2ecc71", "carbon": "#9b59b6", "alpha": "#e74c3c"}
+COMBO_COLORS= {2: "#3498db", 3: "#2ecc71", 4: "#e74c3c"}
 
 
-def load_step1_stats():
-    path = os.path.join(STATS_DIR, "step1_stats.json")
-    if os.path.exists(path):
-        with open(path) as f:
-            return json.load(f)
+def load_grid(ray):
+    path = os.path.join(DATA_DIR, f"{ray}_edep.csv")
+    grid = np.zeros((NX, NY, NZ))
+    if not os.path.exists(path):
+        return None
+    with open(path) as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            parts = line.split(",")
+            if len(parts) < 4:
+                continue
+            try:
+                ix = int(float(parts[0]))
+                iy = int(float(parts[1]))
+                iz = int(float(parts[2]))
+                ev = float(parts[3])
+                if 0 <= ix < NX and 0 <= iy < NY and 0 <= iz < NZ and ev > 0:
+                    grid[ix, iy, iz] += ev
+            except (ValueError, IndexError):
+                continue
+    return grid if grid.sum() > 0 else None
+
+
+def scale_grid(grid, opt_n, base_n=2000):
+    """Scale grid from base simulation count to optimal N."""
+    return grid * (opt_n / base_n)
+
+
+def combo_metrics(combined_grid):
+    """Compute prion dose, steel dose, selectivity and score."""
+    prof        = combined_grid.sum(axis=(0, 1))
+    prion_dose  = float(prof[PRION_BINS].sum())
+    steel_dose  = float(prof[STEEL_BINS].sum())
+    total_dose  = float(prof.sum())
+    ratio       = steel_dose / prion_dose if prion_dose > 0 else 999.0
+    score       = prion_dose / (ratio + 0.01)
+    selectivity = prion_dose / steel_dose if steel_dose > 0 else 0.0
     return {
-        "gamma":   {"prion_mev":0.18,"steel_mev":2.1,"selectivity":0.086,"rbe_prion_mev":0.18,"max_reach_mm":95.0},
-        "neutron": {"prion_mev":0.45,"steel_mev":3.8,"selectivity":0.118,"rbe_prion_mev":4.50,"max_reach_mm":99.0},
-        "carbon":  {"prion_mev":0.62,"steel_mev":2.4,"selectivity":0.258,"rbe_prion_mev":1.86,"max_reach_mm":98.5},
-        "alpha":   {"prion_mev":0.001,"steel_mev":8.2,"selectivity":0.0001,"rbe_prion_mev":0.02,"max_reach_mm":1.0},
+        "prion_mev":   round(prion_dose, 4),
+        "steel_mev":   round(steel_dose, 4),
+        "total_mev":   round(total_dose, 4),
+        "surf_core":   round(ratio, 4),
+        "selectivity": round(selectivity, 6),
+        "score":       round(score, 4),
     }
-
-
-def score_combination(rays_in_combo, stats):
-    total_rbe   = sum(stats[r]["rbe_prion_mev"] for r in rays_in_combo)
-    total_steel = sum(stats[r]["steel_mev"]      for r in rays_in_combo)
-    mean_sel    = np.mean([stats[r]["selectivity"]   for r in rays_in_combo])
-    max_reach   = max(stats[r]["max_reach_mm"]        for r in rays_in_combo)
-    coverage    = 1.5 if max_reach > 95.0 else 1.0
-    alpha_bonus = 1.2 if "alpha" in rays_in_combo else 1.0
-    penalty     = 0.05 * total_steel
-    score       = total_rbe * mean_sel * coverage * alpha_bonus - penalty
-    return {
-        "combo":            " + ".join(sorted(rays_in_combo)),
-        "rays":             list(rays_in_combo),
-        "n_rays":           len(rays_in_combo),
-        "total_rbe_prion":  round(float(total_rbe),  4),
-        "total_steel_mev":  round(float(total_steel), 4),
-        "mean_selectivity": round(float(mean_sel),    4),
-        "max_reach_mm":     round(float(max_reach),   2),
-        "coverage_bonus":   coverage,
-        "alpha_bonus":      alpha_bonus,
-        "score":            round(float(score),        4),
-    }
-
-
-def plot_combinations(results):
-    fig, axes = plt.subplots(2, 2, figsize=(16, 11))
-    fig.patch.set_facecolor("#0d1117")
-    sorted_r = sorted(results, key=lambda x: -x["score"])
-    top15    = sorted_r[:15]
-
-    ax = axes[0,0]; ax.set_facecolor("#111827")
-    labels = [r["combo"].replace(" + ","\n+") for r in top15]
-    scores = [r["score"]  for r in top15]
-    nrays  = [r["n_rays"] for r in top15]
-    colors = [COMBO_COLORS[n] for n in nrays]
-    ax.bar(range(len(top15)), scores, color=colors, edgecolor="none")
-    ax.set_xticks(range(len(top15))); ax.set_xticklabels(labels, fontsize=6, color="white")
-    ax.set_title("Top 15 Combinations by Score", color="white", fontsize=11, fontweight="bold")
-    ax.set_ylabel("Score", color="white"); ax.tick_params(colors="white")
-    legend = [Patch(color=c, label=f"{n}-ray") for n,c in COMBO_COLORS.items()]
-    ax.legend(handles=legend, facecolor="#1a1a2e", labelcolor="white", fontsize=9)
-    for sp in ax.spines.values(): sp.set_edgecolor("#444")
-
-    ax = axes[0,1]; ax.set_facecolor("#111827")
-    rbe_prion = [r["total_rbe_prion"] for r in top15]
-    ax.bar(range(len(top15)), rbe_prion, color=colors, edgecolor="none")
-    ax.set_xticks(range(len(top15))); ax.set_xticklabels(labels, fontsize=6, color="white")
-    ax.set_title("RBE-Weighted Prion Dose", color="white", fontsize=11, fontweight="bold")
-    ax.set_ylabel("RBE-MeV", color="white"); ax.tick_params(colors="white")
-    for sp in ax.spines.values(): sp.set_edgecolor("#444")
-
-    ax = axes[1,0]; ax.set_facecolor("#111827")
-    for n, c in COMBO_COLORS.items():
-        sub = [r for r in results if r["n_rays"] == n]
-        if sub:
-            ax.scatter([r["mean_selectivity"] for r in sub],
-                       [r["total_rbe_prion"]  for r in sub],
-                       c=c, s=50, alpha=0.8, label=f"{n}-ray", edgecolors="none")
-    for r in sorted_r[:5]:
-        ax.annotate(r["combo"].replace(" + ","+"),
-                    (r["mean_selectivity"], r["total_rbe_prion"]),
-                    fontsize=6, color="white", xytext=(5,5), textcoords="offset points")
-    ax.set_xlabel("Mean Selectivity", color="white", fontsize=9)
-    ax.set_ylabel("Total RBE-MeV", color="white", fontsize=9)
-    ax.set_title("Selectivity vs RBE Dose", color="white", fontsize=11, fontweight="bold")
-    ax.tick_params(colors="white"); ax.legend(facecolor="#1a1a2e", labelcolor="white")
-    for sp in ax.spines.values(): sp.set_edgecolor("#444")
-
-    ax = axes[1,1]; ax.set_facecolor("#111827"); ax.axis("off")
-    lines = ["TOP 5 COMBINATIONS","="*52,
-             f"{'Rank':<5} {'Combo':<26} {'RBE-MeV':>8} {'Select':>8} {'Score':>7}","─"*52]
-    for i, r in enumerate(sorted_r[:5], 1):
-        lines.append(f"{i:<5} {r['combo']:<26} {r['total_rbe_prion']:>8.4f}"
-                     f" {r['mean_selectivity']:>8.4f} {r['score']:>7.4f}")
-    lines += ["─"*52,"","SURGICAL CONTEXT:",
-              "• Gamma: full rod coverage ✓",
-              "• Neutron: deep + RBE×10 ✓",
-              "• Carbon: Bragg peak at tip ✓",
-              "• Alpha: entry surface ONLY ✗ tip",
-              "• Best tip combo: Neutron+Carbon",
-              "","LIMIT: G4_WATER as prion proxy"]
-    ax.text(0.03, 0.97, "\n".join(lines), transform=ax.transAxes, color="white",
-            fontsize=8, va="top", fontfamily="monospace",
-            bbox=dict(boxstyle="round", facecolor="#1a1a2e", edgecolor="#4a9eff", alpha=0.9))
-
-    fig.suptitle("Surgical Tool — Step 4: Ray Combination Analysis",
-                 color="white", fontsize=14, fontweight="bold")
-    out = os.path.join(STEPS_DIR, "step4_combinations.png")
-    fig.savefig(out, dpi=150, bbox_inches="tight", facecolor=fig.get_facecolor())
-    plt.close(); print(f"    Saved {out}")
 
 
 def run_step4():
     print("\n" + "="*65)
-    print("  SURGICAL TOOL — Step 4: Ray Combinations")
+    print("  SURGICAL TOOL — Step 4: Multi-Ray Combinations")
+    print("  Combines real Geant4 grids additively at optimal counts")
     print("="*65)
-    stats   = load_step1_stats()
+
+    # Load optimal counts
+    opt_path = os.path.join(STATS_DIR, "step2_optimal.json")
+    if not os.path.exists(opt_path):
+        print("  [ERROR] step2_optimal.json not found — run Step 2 first")
+        return []
+    with open(opt_path) as f:
+        step2 = json.load(f)
+
+    opt_counts = {ray: step2[ray]["optimal_count"] for ray in RAYS if ray in step2}
+    print(f"\n  Optimal counts: {opt_counts}")
+
+    # Load all grids
+    grids = {}
+    for ray in RAYS:
+        g = load_grid(ray)
+        if g is not None:
+            grids[ray] = scale_grid(g, opt_counts.get(ray, 2000))
+            print(f"  Loaded {ray}: prion zone sum = {g[:,:,PRION_BINS].sum():.4f} MeV (unscaled)")
+        else:
+            print(f"  [SKIP] {ray} — no grid data")
+
+    # Test all combinations
     results = []
-    for n in range(2, len(RAYS)+1):
-        for combo in combinations(RAYS, n):
-            r = score_combination(combo, stats)
-            results.append(r)
-            print(f"  {r['combo']:<35} score={r['score']:.4f}")
-    results_sorted = sorted(results, key=lambda x: -x["score"])
-    print(f"\n  Best: {results_sorted[0]['combo']}  score={results_sorted[0]['score']:.4f}")
-    plot_combinations(results)
-    path = os.path.join(STATS_DIR, "step4_combinations.csv")
-    with open(path, "w", newline="") as f:
-        w = csv.DictWriter(f, fieldnames=results[0].keys())
-        w.writeheader(); w.writerows(results_sorted)
-    print(f"\n    Saved {path}")
-    payload = {"combinations":results_sorted,
-               "best_combo":results_sorted[0]["combo"],
-               "best_score":results_sorted[0]["score"]}
+    for n_rays in range(2, len(RAYS) + 1):
+        for combo in combinations(RAYS, n_rays):
+            # Skip combos with no viable rays (alpha always zero)
+            viable = [r for r in combo if r in grids and grids[r][:,:,PRION_BINS].sum() > 0]
+            combo_name = " + ".join(combo)
+
+            combined = np.zeros((NX, NY, NZ))
+            for ray in combo:
+                if ray in grids:
+                    combined += grids[ray]
+
+            m = combo_metrics(combined)
+            results.append({
+                "combo":      combo_name,
+                "rays":       list(combo),
+                "n_rays":     n_rays,
+                "viable_rays":len(viable),
+                **m
+            })
+            print(f"  {combo_name:<40}  score={m['score']:>10.2f}  "
+                  f"prion={m['prion_mev']:>10.4f} MeV  sel={m['selectivity']:.6f}")
+
+    results.sort(key=lambda x: x["score"], reverse=True)
+
+    print(f"\n  ★ BEST COMBINATION: {results[0]['combo']}")
+    print(f"    Score: {results[0]['score']:.4f}")
+    print(f"    Prion MeV: {results[0]['prion_mev']:.4f}")
+    print(f"    Selectivity: {results[0]['selectivity']:.6f}")
+
+    plot_results(results)
+
+    # Save CSV
+    csv_path = os.path.join(STATS_DIR, "step4_combinations.csv")
+    with open(csv_path, "w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["Combo", "N_Rays", "PrionMeV", "SteelMeV", "SurfCore", "Selectivity", "Score"])
+        for r in results:
+            w.writerow([r["combo"], r["n_rays"], r["prion_mev"],
+                        r["steel_mev"], r["surf_core"], r["selectivity"], r["score"]])
+
     with open(os.path.join(STATS_DIR, "step4_combinations.json"), "w") as f:
-        json.dump(payload, f, indent=2)
+        json.dump({"combinations": results[:10], "best": results[0]["combo"]}, f, indent=2)
+
+    print(f"\n    Saved {csv_path}")
     print("\n  Step 4 complete.")
-    return payload
+    return results
+
+
+def plot_results(results):
+    top = results[:min(10, len(results))]
+    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+    fig.patch.set_facecolor("#0d1117")
+    fig.suptitle("Surgical Tool — Step 4: Ray Combination Rankings",
+                 color="white", fontsize=13, fontweight="bold")
+
+    labels  = [r["combo"].replace(" + ", "\n+\n") for r in top]
+    colors  = [COMBO_COLORS.get(r["n_rays"], "#888") for r in top]
+
+    for ax, key, title, ylabel in [
+        (axes[0], "score",       "Score (prion/ratio)",        "Score"),
+        (axes[1], "prion_mev",   "Prion Dose (MeV)",           "MeV"),
+        (axes[2], "selectivity", "Selectivity (prion/steel)",  "Selectivity"),
+    ]:
+        ax.set_facecolor("#111827")
+        ax.set_title(title, color="white", fontsize=10)
+        ax.set_ylabel(ylabel, color="white", fontsize=8)
+        ax.tick_params(colors="white", labelsize=6)
+        for sp in ax.spines.values(): sp.set_color("#444")
+        vals = [r[key] for r in top]
+        bars = ax.bar(range(len(top)), vals, color=colors, edgecolor="none")
+        ax.set_xticks(range(len(top)))
+        ax.set_xticklabels([r["combo"] for r in top],
+                           rotation=45, ha="right", fontsize=6, color="white")
+        for bar, val in zip(bars, vals):
+            ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() * 1.01,
+                    f"{val:.1f}", ha="center", va="bottom", color="white", fontsize=6)
+
+    from matplotlib.patches import Patch
+    legend = [Patch(color=c, label=f"{n}-ray") for n, c in COMBO_COLORS.items()]
+    axes[0].legend(handles=legend, fontsize=7, facecolor="#222", labelcolor="white")
+
+    plt.tight_layout()
+    out = os.path.join(STEPS_DIR, "step4_combinations.png")
+    fig.savefig(out, dpi=150, bbox_inches="tight", facecolor=fig.get_facecolor())
+    plt.close()
+    print(f"    Saved {out}")
 
 
 if __name__ == "__main__":
